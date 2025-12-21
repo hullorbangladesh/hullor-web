@@ -10,11 +10,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-  body {
+  html, body {
     margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  body {
     font-family: 'Poppins', sans-serif;
     background-color: #fffaf2;
     color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
   }
 
   /* Header */
@@ -34,8 +42,9 @@
 
   /* Main */
   main {
+    flex: 1;
     max-width: 900px;
-    margin: 70px auto;
+    margin: 70px auto 0 auto;
     padding: 0 20px;
     text-align: center;
   }
@@ -89,7 +98,6 @@
     color: white;
     text-align: center;
     padding: 30px 20px;
-    margin-top: 80px;
     font-size: 0.9em;
     letter-spacing: 0.5px;
   }
