@@ -44,7 +44,7 @@
     border-radius: 14px;
     padding: 45px 35px;
     box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    text-align: center;
+    text-align: left; /* Changed to left-aligned */
   }
 
   h2 {
@@ -61,14 +61,16 @@
 
   /* Back Button */
   a.back {
-    display: inline-block;
-    margin-top: 40px;
+    display: block; /* makes it centered block */
+    margin: 40px auto 0 auto; /* centers the button */
     background-color: #A020F0;
     color: white;
     text-decoration: none;
     padding: 12px 26px;
     border-radius: 8px;
     font-weight: 600;
+    width: max-content; /* button width fits content */
+    text-align: center;
     transition: 0.3s;
   }
 
