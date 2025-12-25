@@ -44,8 +44,8 @@
   main {
     flex: 1;
     max-width: 900px;
-    margin: 70px auto 0 auto;
-    padding: 0 20px;
+    margin: 50px auto 0 auto; /* reduced top margin for mobile */
+    padding: 0 15px; /* more padding on small screens */
     text-align: center;
   }
 
@@ -77,14 +77,16 @@
 
   /* Back Button */
   a.back {
-    display: inline-block;
-    margin-top: 40px;
+    display: block; /* block to center on mobile */
+    margin: 40px auto 0 auto;
     background-color: #A020F0;
     color: white;
     text-decoration: none;
     padding: 12px 26px;
     border-radius: 8px;
     font-weight: 600;
+    width: max-content; /* button width fits content */
+    text-align: center;
     transition: 0.3s;
   }
 
@@ -100,6 +102,7 @@
     padding: 30px 20px;
     font-size: 0.9em;
     letter-spacing: 0.5px;
+    margin-top: auto;
   }
 
   /* Mobile */
@@ -108,11 +111,25 @@
       font-size: 1.8em;
     }
 
+    main {
+      margin: 30px auto 0 auto; /* reduced top margin */
+      padding: 0 12px;
+    }
+
     .contact-card {
-      padding: 35px 22px;
+      padding: 30px 20px; /* smaller padding for small screens */
+    }
+
+    h2 {
+      font-size: 1.4em;
+    }
+
+    .email {
+      font-size: 1.1em;
     }
   }
 </style>
+
 </head>
 
 <body>
