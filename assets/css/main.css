@@ -1643,7 +1643,7 @@ ol {
   visibility: hidden;
 }
 
-.header.sticky .navbar-brand .logo {
+.header.sticky .navbar-brand .dark-logo {
   opacity: 1;
   visibility: visible;
 }
