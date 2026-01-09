@@ -1406,7 +1406,7 @@ ol {
 ========================================*/
 
 
-/* Sticky Header */
+/* Always visible fixed header */
 .sticky-header {
     position: fixed;
     top: 0;
@@ -1417,51 +1417,9 @@ ol {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
 }
 
-/* Prevent content jump */
+/* Prevent page content hiding under header */
 body {
-    padding-top: 80px;
-}
-
-/* Navbar spacing */
-.navbar {
-    padding: 14px 0;
-}
-
-/* Nav links */
-.navbar-nav .nav-item a {
-    font-weight: 500;
-    color: #222;
-    padding: 10px 16px;
-    transition: color 0.3s ease;
-}
-
-.navbar-nav .nav-item a:hover,
-.navbar-nav .nav-item a.active {
-    color: #7b3fe4;
-}
-
-/* Get Hullor button */
-.get-hullor-btn {
-    background: #7b3fe4;
-    color: #fff;
-    padding: 10px 22px;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.get-hullor-btn:hover {
-    background: #652ad4;
-    color: #fff;
-}
-
-/* Mobile toggler */
-.toggler-icon {
-    width: 25px;
-    height: 2px;
-    background: #222;
-    display: block;
-    margin: 5px 0;
+    padding-top: 80px; /* adjust if header height changes */
 }
 
 
