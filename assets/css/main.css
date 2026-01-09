@@ -1638,12 +1638,13 @@ ol {
   }
 }
 
-/* Keep single logo visible always */
-.header .navbar-brand img,
-.header.sticky .navbar-brand img {
-  opacity: 1 !important;
-  visibility: visible !important;
+/* Make sure single logo is always visible */
+.header .navbar-brand img {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: none !important; /* optional: remove fade effects */
 }
+
 
 
 .header.sticky .button .btn {
