@@ -1638,7 +1638,8 @@ ol {
   }
 }
 
-/* Keep single logo visible when sticky */
+/* Keep single logo visible always */
+.header .navbar-brand img,
 .header.sticky .navbar-brand img {
   opacity: 1 !important;
   visibility: visible !important;
