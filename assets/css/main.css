@@ -1623,12 +1623,8 @@ ol {
 }
 
 .header .navbar-brand img {
-    width: 160px; /* or your preferred size */
-    opacity: 1 !important;
-    visibility: visible !important;
-    transition: none !important; /* remove fade effect */
+  width: 160px;
 }
-
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .header .navbar-brand img {
@@ -1642,21 +1638,15 @@ ol {
   }
 }
 
-/* Make single logo always visible, ignore sticky effects */
-.header .navbar-brand img {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transition: none !important; /* optional: remove fade effect */
+.header.sticky .navbar-brand .white-logo {
+  opacity: 0;
+  visibility: hidden;
 }
 
-/* Prevent sticky header JS from hiding it */
-.header.sticky .navbar-brand img {
-    opacity: 1 !important;
-    visibility: visible !important;
+.header.sticky .navbar-brand .dark-logo {
+  opacity: 1;
+  visibility: visible;
 }
-
-
-
 
 .header.sticky .button .btn {
   background-color: #8836b8;
