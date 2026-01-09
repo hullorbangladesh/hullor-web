@@ -1638,15 +1638,15 @@ ol {
   }
 }
 
-.header.sticky .navbar-brand img {
-  opacity: 1 !important;
-  visibility: visible !important;
+.header.sticky .navbar-brand .white-logo {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .header.sticky .navbar-brand .dark-logo {
-  display: none !important;
+  opacity: 1;
+  visibility: visible;
 }
-
 
 .header.sticky .button .btn {
   background-color: #8836b8;
