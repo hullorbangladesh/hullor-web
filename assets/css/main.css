@@ -1638,12 +1638,19 @@ ol {
   }
 }
 
-/* Make sure single logo is always visible */
+/* Make single logo always visible, ignore sticky effects */
 .header .navbar-brand img {
     opacity: 1 !important;
     visibility: visible !important;
-    transition: none !important; /* optional: remove fade effects */
+    transition: none !important; /* optional: remove fade effect */
 }
+
+/* Prevent sticky header JS from hiding it */
+.header.sticky .navbar-brand img {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
 
 
 
