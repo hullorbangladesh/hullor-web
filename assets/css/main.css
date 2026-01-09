@@ -1638,7 +1638,7 @@ ol {
   }
 }
 
-.header.sticky .navbar-brand .white-logo {
+.header.sticky .navbar-brand .logo {
   opacity: 0;
   visibility: hidden;
 }
