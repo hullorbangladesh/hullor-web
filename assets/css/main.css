@@ -1400,21 +1400,70 @@ ol {
     opacity: 0;
   }
 }
-/* Sticky header */
-.sticky-header {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    z-index: 999;
-    background-color: #fff; /* Change as needed */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+/*========================
+  Sticky Header Only
+=========================*/
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+  background-color: #fff; /* navbar background */
+  box-shadow: 0px 20px 50px 0px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease-out;
 }
 
-/* Optional: adjust padding for smaller screens */
-@media (max-width: 991px) {
-    .sticky-header {
-        padding: 10px 0;
-    }
+/* Navbar links */
+.sticky .navbar .navbar-nav {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.sticky .navbar .navbar-nav .nav-item a {
+  color: #081828; /* default link color */
+  padding: 10px 15px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.sticky .navbar .navbar-nav .nav-item a.active {
+  color: #8836b8; /* active link color */
+}
+
+.sticky .navbar .navbar-nav .nav-item a:hover {
+  color: #8836b8;
+}
+
+/* Sub-menu links (if dropdowns) */
+.sticky .navbar .navbar-nav .nav-item .sub-menu a {
+  color: #081828;
+}
+
+.sticky .navbar .navbar-nav .nav-item .sub-menu a.active {
+  color: #fff;
+}
+
+/* Mobile menu toggler */
+.sticky .navbar .mobile-menu-btn .toggler-icon {
+  background: #333;
+}
+
+/* Optional button styling */
+.sticky .button .btn {
+  background-color: #8836b8;
+  color: #fff;
+  border: none;
+  padding: 12px 30px;
+  transition: all 0.3s;
+}
+
+.sticky .button .btn:hover {
+  background-color: #081828;
+  color: #fff;
 }
 
 
