@@ -1623,8 +1623,12 @@ ol {
 }
 
 .header .navbar-brand img {
-  width: 160px;
+    width: 160px; /* or your preferred size */
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: none !important; /* remove fade effect */
 }
+
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .header .navbar-brand img {
