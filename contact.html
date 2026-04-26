@@ -1,179 +1,446 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact Hullor — Hullor</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Contact Hullor — Get in Touch</title>
 <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" />
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
 <style>
   :root {
-    --cream: #F4F1EB;
-    --ink: #1C1F1A;
+    --cream:       #F5F1E8;
+    --cream-dark:  #EDE7D5;
+    --ink:         #1B1E19;
+    --forest:      #2C4A35;
     --forest-deep: #1A3025;
-    --gold: #B8963E;
-    --sand: #D8CFA8;
-    --white: #FFFFFF;
+    --forest-mid:  #3A5E45;
+    --gold:        #B8963E;
+    --gold-light:  #D4AF5A;
+    --gold-pale:   #ECD98E;
+    --sand:        #D4C99A;
+    --sand-light:  #E8E0C4;
+    --muted:       #6B7368;
+    --white:       #FFFFFF;
+    --radius-sm:   4px;
+    --radius-md:   8px;
+    --shadow-card: 0 2px 16px rgba(26,48,37,0.08);
+    --shadow-hover:0 20px 56px rgba(26,48,37,0.18);
+    --transition:  0.32s cubic-bezier(0.4,0,0.2,1);
   }
 
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
-
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
   body {
-    font-family: 'DM Sans', sans-serif;
-    background-color: var(--cream);
+    font-family: "DM Sans", sans-serif;
+    background: var(--cream);
     color: var(--ink);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
   }
 
-  /* Main */
-  main {
-    flex: 1;
-    max-width: 900px;
-    margin: 80px auto;
-    padding: 0 15px;
+  /* ─── Navigation ─────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 60px;
+    background: rgba(245,241,232,0.94);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--sand-light);
+  }
+  .nav-logo {
+    font-family: "Playfair Display", serif;
+    font-size: 26px; font-weight: 900;
+    color: var(--forest-deep); text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a {
+    text-decoration: none; color: var(--muted);
+    font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+    transition: color var(--transition); position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+    height: 1px; background: var(--gold);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform var(--transition);
+  }
+  .nav-links a:hover { color: var(--forest); }
+  .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+  .nav-links a.active { color: var(--forest-deep); }
+
+  /* Mobile hamburger */
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: var(--forest-deep); border-radius: 99px;
+    transition: var(--transition);
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none; position: fixed; top: 57px; left: 0; right: 0; z-index: 99;
+    background: rgba(245,241,232,0.98);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--sand-light);
+    padding: 20px 24px 28px;
+    flex-direction: column;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    text-decoration: none; color: var(--muted);
+    font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--sand-light);
+    transition: color var(--transition);
+  }
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu a:hover, .mobile-menu a.active { color: var(--forest-deep); }
+
+  /* ─── Page Header ────────────────────────── */
+  .page-header {
+    padding: 160px 40px 90px;
     text-align: center;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 0%, rgba(184,150,62,0.10) 0%, transparent 70%),
+      linear-gradient(165deg, var(--cream) 0%, var(--cream-dark) 100%);
+    position: relative; overflow: hidden;
+  }
+  .page-header::before {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 10% 90%, rgba(44,74,53,0.06) 0%, transparent 45%),
+      radial-gradient(circle at 90% 10%, rgba(184,150,62,0.07) 0%, transparent 45%);
+    pointer-events: none;
+  }
+  .page-eyebrow {
+    font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 18px; font-weight: 500;
+    opacity: 0; animation: fadeUp 0.8s 0.1s forwards;
+  }
+  .page-title {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(40px, 7vw, 78px);
+    font-weight: 900; line-height: 1.1;
+    color: var(--forest-deep); margin-bottom: 24px;
+    opacity: 0; animation: fadeUp 0.8s 0.25s forwards;
+  }
+  .page-title em { color: var(--gold); font-style: italic; }
+  .page-subtitle {
+    font-size: 16px; color: var(--muted); font-weight: 300;
+    max-width: 480px; margin: 0 auto 28px; line-height: 1.75;
+    opacity: 0; animation: fadeUp 0.8s 0.35s forwards;
+  }
+  .page-rule {
+    width: 48px; height: 2px; margin: 0 auto;
+    background: linear-gradient(90deg, var(--gold), var(--gold-pale));
+    border-radius: 99px;
+    opacity: 0; animation: fadeUp 0.8s 0.45s forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── Main ───────────────────────────────── */
+  main { flex: 1; width: 100%; }
+
+  .content-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 80px 40px 100px;
+  }
+
+  /* Contact cards grid */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+    opacity: 0; animation: fadeUp 0.8s 0.1s forwards;
   }
 
   .contact-card {
     background: var(--white);
-    border-top: 4px solid var(--gold);
-    padding: 50px 40px;
-    box-shadow: 0 20px 40px rgba(26, 48, 37, 0.05);
-    margin-top: 40px;
+    border: 1px solid var(--sand-light);
+    border-radius: var(--radius-md);
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    box-shadow: var(--shadow-card);
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-pale));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform var(--transition);
+  }
+  .contact-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--sand);
+  }
+  .contact-card:hover::before { transform: scaleX(1); }
+
+  .card-icon {
+    width: 48px; height: 48px;
+    background: var(--cream);
+    border: 1px solid var(--sand-light);
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .card-label {
+    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; margin-top: 4px;
+  }
+  .card-value {
+    font-family: "Playfair Display", serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--forest-deep); line-height: 1.2;
+  }
+  .card-sub {
+    font-size: 13px; color: var(--muted); font-weight: 300;
+  }
+  .card-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #E8F5ED; color: #1A7A40;
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 99px;
+    font-weight: 500; margin-top: 4px;
+  }
+  .card-badge::before {
+    content: ''; width: 7px; height: 7px;
+    background: #25D366; border-radius: 50%;
+    display: block;
   }
 
-  h2 {
-    font-family: 'Playfair Display', serif;
-    color: var(--forest-deep);
-    margin-bottom: 15px;
-    font-size: 2.2em;
-    font-weight: 900;
+  /* Hours card — full width */
+  .hours-card {
+    background: var(--forest-deep);
+    border-radius: var(--radius-md);
+    padding: 40px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 40px;
+    opacity: 0; animation: fadeUp 0.8s 0.25s forwards;
+    flex-wrap: wrap;
+  }
+  .hours-left {}
+  .hours-eyebrow {
+    font-size: 9px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; margin-bottom: 10px;
+  }
+  .hours-title {
+    font-family: "Playfair Display", serif;
+    font-size: 26px; font-weight: 900;
+    color: var(--gold-pale); line-height: 1.2;
+  }
+  .hours-desc {
+    font-size: 14px; color: rgba(212,199,168,0.6);
+    font-weight: 300; margin-top: 8px;
+  }
+  .hours-time {
+    text-align: right;
+  }
+  .hours-range {
+    font-family: "Playfair Display", serif;
+    font-size: 36px; font-weight: 900;
+    color: var(--gold-pale); line-height: 1;
+  }
+  .hours-days {
+    font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(212,199,168,0.5); margin-top: 6px;
   }
 
-  p {
-    font-size: 1.1em;
-    line-height: 1.8;
-    margin-bottom: 18px;
-    font-weight: 300;
+  /* Info row */
+  .info-row {
+    background: var(--white);
+    border: 1px solid var(--sand-light);
+    border-radius: var(--radius-md);
+    padding: 28px 32px;
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 40px;
+    box-shadow: var(--shadow-card);
+    opacity: 0; animation: fadeUp 0.8s 0.35s forwards;
   }
+  .info-icon { font-size: 20px; flex-shrink: 0; }
+  .info-text { font-size: 14px; color: var(--muted); line-height: 1.7; font-weight: 300; }
+  .info-text strong { color: var(--forest-deep); font-weight: 500; }
 
-  .contact-info {
-    font-size: 1.5em;
-    color: var(--forest-deep);
+  /* Back button */
+  .btn-back {
+    display: inline-block;
+    background: var(--forest-deep); color: var(--gold-pale);
+    padding: 15px 40px; font-size: 11px;
+    letter-spacing: 3px; text-transform: uppercase;
+    text-decoration: none; border-radius: var(--radius-sm);
+    border: 1.5px solid transparent;
+    transition: var(--transition);
+    box-shadow: 0 4px 20px rgba(26,48,37,0.15);
     font-weight: 500;
-    margin: 10px 0;
+    opacity: 0; animation: fadeUp 0.8s 0.45s forwards;
+  }
+  .btn-back:hover {
+    background: var(--forest-mid); border-color: var(--gold);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 32px rgba(26,48,37,0.22);
   }
 
-  .contact-info a {
-    color: var(--forest-deep);
-    text-decoration: none;
-    transition: 0.3s;
-  }
-
-  .contact-info a:hover {
-    color: var(--gold);
-  }
-
-  .whatsapp-badge {
-    display: inline-block;
-    background-color: #25D366;
-    color: white;
-    padding: 5px 15px;
-    border-radius: 50px;
-    font-size: 0.5em;
-    vertical-align: middle;
-    margin-left: 10px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  /* Back Button */
-  a.back {
-    display: inline-block;
-    margin-top: 40px;
-    background-color: var(--forest-deep);
-    color: #E8D49A;
-    text-decoration: none;
-    padding: 14px 32px;
-    font-size: 12px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    transition: 0.3s;
-  }
-
-  a.back:hover {
-    background-color: var(--ink);
-    transform: translateY(-2px);
-  }
-
-  /* Footer */
+  /* ─── Footer ─────────────────────────────── */
   footer {
-    background-color: var(--forest-deep);
-    color: rgba(232, 212, 154, 0.7);
+    background: var(--forest-deep);
+    padding: 60px 24px 44px;
     text-align: center;
-    padding: 40px 20px;
-    font-size: 0.8em;
-    letter-spacing: 1px;
-    margin-top: auto;
   }
+  .footer-logo {
+    font-family: "Playfair Display", serif;
+    font-size: 26px; font-weight: 900;
+    color: var(--gold-pale); margin-bottom: 14px; display: block;
+    text-decoration: none;
+  }
+  .footer-logo span { color: var(--gold); }
+  .footer-tagline {
+    font-size: 13px; color: rgba(212,199,168,0.55);
+    max-width: 360px; margin: 0 auto 24px;
+    font-weight: 300; line-height: 1.75;
+  }
+  .footer-rule { width: 36px; height: 1px; background: var(--gold); margin: 0 auto 24px; }
+  .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 32px; flex-wrap: wrap; }
+  .footer-links a {
+    color: rgba(212,199,168,0.45); text-decoration: none;
+    font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+    transition: color var(--transition); font-weight: 500;
+  }
+  .footer-links a:hover { color: var(--gold-light); }
+  .footer-copy { font-size: 11px; color: rgba(212,199,168,0.3); }
 
-  /* Mobile */
-  @media (max-width: 600px) {
-    main {
-      margin: 40px auto;
-    }
-
-    .contact-card {
-      padding: 40px 20px;
-    }
-
-    h2 {
-      font-size: 1.8em;
-    }
-
-    .contact-info {
-      font-size: 1.2em;
-    }
+  /* ─── Responsive ─────────────────────────── */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .page-header { padding: 110px 24px 70px; }
+    .content-wrap { padding: 52px 20px 80px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 16px; }
+    .hours-card { flex-direction: column; align-items: flex-start; padding: 32px 24px; }
+    .hours-time { text-align: left; }
+    .hours-range { font-size: 28px; }
+    .info-row { flex-direction: column; align-items: flex-start; padding: 24px 20px; }
+    .btn-back { width: 100%; text-align: center; }
   }
 </style>
-
 </head>
-
 <body>
 
-<main>
-  <h2>Get in Touch</h2>
-  <p>
-    Have questions about our elegant accessories or need assistance with an order? 
-    Reach out to us directly via call or WhatsApp.
-  </p>
-
-  <div class="contact-card">
-    <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8em; color: var(--gold); font-weight: 500;">Direct Contact</p>
-    <div class="contact-info">
-      📞 <a href="tel:01863709122">01863709122</a>
-    </div>
-    <div class="contact-info">
-      💬 <a href="https://wa.me/8801863709122" target="_blank">01863709122</a>
-      <span class="whatsapp-badge">WhatsApp</span>
-    </div>
-    <p style="margin-top: 20px; font-size: 0.9em; color: var(--muted);">Available 10:00 AM — 10:00 PM</p>
+<nav>
+  <a class="nav-logo" href="index.html">Hullor<span>.</span></a>
+  <div class="nav-links">
+    <a href="index.html#products">Store</a>
+    <a href="about.html">Our Story</a>
+    <a href="contact.html" class="active">Contact</a>
   </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
 
-  <a href="index.html" class="back">← Back to Store</a>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html#products">Store</a>
+  <a href="about.html">Our Story</a>
+  <a href="contact.html" class="active">Contact</a>
+</div>
+
+<div class="page-header">
+  <p class="page-eyebrow">We're Here for You</p>
+  <h1 class="page-title">Get in <em>Touch</em></h1>
+  <p class="page-subtitle">Have a question about an order or our products? Reach us directly — we're always happy to help.</p>
+  <div class="page-rule"></div>
+</div>
+
+<main>
+  <div class="content-wrap">
+
+    <!-- Contact cards -->
+    <div class="contact-grid">
+      <a class="contact-card" href="tel:01863709122">
+        <div class="card-icon">📞</div>
+        <p class="card-label">Call Us</p>
+        <p class="card-value">01863-709122</p>
+        <p class="card-sub">Tap to call directly</p>
+      </a>
+
+      <a class="contact-card" href="https://wa.me/8801863709122" target="_blank" rel="noopener">
+        <div class="card-icon">💬</div>
+        <p class="card-label">WhatsApp</p>
+        <p class="card-value">01863-709122</p>
+        <span class="card-badge">Available Now</span>
+      </a>
+    </div>
+
+    <!-- Hours banner -->
+    <div class="hours-card">
+      <div class="hours-left">
+        <p class="hours-eyebrow">Support Hours</p>
+        <p class="hours-title">We're available<br>every day.</p>
+        <p class="hours-desc">Quick responses on WhatsApp during hours.</p>
+      </div>
+      <div class="hours-time">
+        <p class="hours-range">10AM – 10PM</p>
+        <p class="hours-days">Sat — Thu</p>
+      </div>
+    </div>
+
+    <!-- Info note -->
+    <div class="info-row">
+      <span class="info-icon">📦</span>
+      <p class="info-text">For <strong>order tracking, returns, or product questions</strong>, WhatsApp is the fastest way to reach us. We typically respond within minutes during business hours.</p>
+    </div>
+
+    <a href="index.html" class="btn-back">← Back to Store</a>
+
+  </div>
 </main>
 
 <footer>
-  &copy; 2026 Hullor Bangladesh. All rights reserved.  
+  <a class="footer-logo" href="index.html">Hullor<span>.</span></a>
+  <p class="footer-tagline">Connecting people through curated products and meaningful experiences across Bangladesh.</p>
+  <div class="footer-rule"></div>
+  <div class="footer-links">
+    <a href="about.html">About Us</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+  <p class="footer-copy">&copy; 2026 Hullor Bangladesh. All rights reserved.</p>
 </footer>
 
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+</script>
 </body>
 </html>
