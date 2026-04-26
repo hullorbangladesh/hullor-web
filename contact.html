@@ -6,10 +6,18 @@
 <title>Contact Hullor — Hullor</title>
 <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" />
 
-<!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
+  :root {
+    --cream: #F4F1EB;
+    --ink: #1C1F1A;
+    --forest-deep: #1A3025;
+    --gold: #B8963E;
+    --sand: #D8CFA8;
+    --white: #FFFFFF;
+  }
+
   html, body {
     margin: 0;
     padding: 0;
@@ -17,115 +25,122 @@
   }
 
   body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #fffaf2;
-    color: #333;
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--cream);
+    color: var(--ink);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-  }
-
-  /* Header */
-  header {
-    background: linear-gradient(135deg, #A020F0, #A020F0);
-    color: white;
-    padding: 25px 20px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  }
-
-  header h1 {
-    margin: 0;
-    font-size: 2.2em;
-    font-weight: 700;
   }
 
   /* Main */
   main {
     flex: 1;
     max-width: 900px;
-    margin: 50px auto 0 auto; /* reduced top margin for mobile */
-    padding: 0 15px; /* more padding on small screens */
+    margin: 80px auto;
+    padding: 0 15px;
     text-align: center;
   }
 
   .contact-card {
-    background: white;
-    border-radius: 14px;
-    padding: 45px 35px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    background: var(--white);
+    border-top: 4px solid var(--gold);
+    padding: 50px 40px;
+    box-shadow: 0 20px 40px rgba(26, 48, 37, 0.05);
     margin-top: 40px;
   }
 
   h2 {
-    color: #A020F0;
+    font-family: 'Playfair Display', serif;
+    color: var(--forest-deep);
     margin-bottom: 15px;
-    font-size: 1.6em;
+    font-size: 2.2em;
+    font-weight: 900;
   }
 
   p {
-    font-size: 1.05em;
+    font-size: 1.1em;
     line-height: 1.8;
     margin-bottom: 18px;
+    font-weight: 300;
   }
 
-  .email {
-    font-size: 1.15em;
-    color: #A020F0;
-    font-weight: 600;
+  .contact-info {
+    font-size: 1.5em;
+    color: var(--forest-deep);
+    font-weight: 500;
+    margin: 10px 0;
+  }
+
+  .contact-info a {
+    color: var(--forest-deep);
+    text-decoration: none;
+    transition: 0.3s;
+  }
+
+  .contact-info a:hover {
+    color: var(--gold);
+  }
+
+  .whatsapp-badge {
+    display: inline-block;
+    background-color: #25D366;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 50px;
+    font-size: 0.5em;
+    vertical-align: middle;
+    margin-left: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
   }
 
   /* Back Button */
   a.back {
-    display: block; /* block to center on mobile */
-    margin: 40px auto 0 auto;
-    background-color: #A020F0;
-    color: white;
+    display: inline-block;
+    margin-top: 40px;
+    background-color: var(--forest-deep);
+    color: #E8D49A;
     text-decoration: none;
-    padding: 12px 26px;
-    border-radius: 8px;
-    font-weight: 600;
-    width: max-content; /* button width fits content */
-    text-align: center;
+    padding: 14px 32px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
     transition: 0.3s;
   }
 
   a.back:hover {
-    box-shadow: 0 6px 14px rgba(160,32,240,0.3);
+    background-color: var(--ink);
+    transform: translateY(-2px);
   }
 
   /* Footer */
   footer {
-    background-color: #081828;
-    color: white;
+    background-color: var(--forest-deep);
+    color: rgba(232, 212, 154, 0.7);
     text-align: center;
-    padding: 30px 20px;
-    font-size: 0.9em;
-    letter-spacing: 0.5px;
+    padding: 40px 20px;
+    font-size: 0.8em;
+    letter-spacing: 1px;
     margin-top: auto;
   }
 
   /* Mobile */
   @media (max-width: 600px) {
-    header h1 {
-      font-size: 1.8em;
-    }
-
     main {
-      margin: 30px auto 0 auto; /* reduced top margin */
-      padding: 0 12px;
+      margin: 40px auto;
     }
 
     .contact-card {
-      padding: 30px 20px; /* smaller padding for small screens */
+      padding: 40px 20px;
     }
 
     h2 {
-      font-size: 1.4em;
+      font-size: 1.8em;
     }
 
-    .email {
-      font-size: 1.1em;
+    .contact-info {
+      font-size: 1.2em;
     }
   }
 </style>
@@ -137,20 +152,27 @@
 <main>
   <h2>Get in Touch</h2>
   <p>
-    We’re always happy to hear from you! Whether you have questions, suggestions, or
-    just want to say hello, reach out anytime.
+    Have questions about our elegant accessories or need assistance with an order? 
+    Reach out to us directly via call or WhatsApp.
   </p>
 
   <div class="contact-card">
-    <p>Email our support team at:</p>
-    <p class="email">📧 <a href="mailto:eventappbangladesh@gmail.com" style="color:#A020F0;text-decoration:none;">eventappbangladesh@gmail.com</a></p>
+    <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8em; color: var(--gold); font-weight: 500;">Direct Contact</p>
+    <div class="contact-info">
+      📞 <a href="tel:01863709122">01863709122</a>
+    </div>
+    <div class="contact-info">
+      💬 <a href="https://wa.me/8801863709122" target="_blank">01863709122</a>
+      <span class="whatsapp-badge">WhatsApp</span>
+    </div>
+    <p style="margin-top: 20px; font-size: 0.9em; color: var(--muted);">Available 10:00 AM — 10:00 PM</p>
   </div>
 
-  <a href="/" class="back">← Back to Home</a>
+  <a href="index.html" class="back">← Back to Store</a>
 </main>
 
 <footer>
-  &copy; 2025 Hullor Bangladesh. All rights reserved.  
+  &copy; 2026 Hullor Bangladesh. All rights reserved.  
 </footer>
 
 </body>
