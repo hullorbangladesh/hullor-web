@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Hullor Bangladesh</title>
+<title>Hullor Bangladesh — Premium Accessories</title>
 <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
@@ -52,11 +52,25 @@
   #products { padding: 80px 60px; }
   .section-title { text-align: center; font-family: "Playfair Display", serif; font-size: 42px; color: var(--forest-deep); margin-bottom: 60px; }
   .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; }
-  .product-card { background: var(--white); border: 1px solid rgba(184, 150, 62, 0.15); transition: 0.35s; }
+  .product-card { background: var(--white); border: 1px solid rgba(184, 150, 62, 0.15); transition: 0.35s; border-radius: 4px; overflow: hidden;}
   .product-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(26, 48, 37, 0.14); }
-  .product-img-wrap { height: 350px; background: #f0ede6; display: flex; align-items: center; justify-content: center; padding: 20px; }
-  .product-img-wrap img { max-width: 100%; max-height: 100%; object-fit: contain; transition: 0.5s; }
-  .product-card:hover .product-img-wrap img { transform: scale(1.04); }
+  
+  .product-img-wrap { 
+    height: 400px; 
+    background: #F4F1EB; /* Exact match to image background */
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 0;
+  }
+  .product-img-wrap img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: contain; /* Shows full image without cropping */
+    transition: 0.5s; 
+  }
+  .product-card:hover .product-img-wrap img { transform: scale(1.05); }
+
   .product-body { padding: 30px; }
   .product-name { font-family: "Playfair Display", serif; font-size: 24px; font-weight: 700; color: var(--forest-deep); margin-bottom: 10px; }
   .product-price { font-family: "Playfair Display", serif; font-size: 28px; color: var(--forest-deep); font-weight: 700; margin-bottom: 20px; }
@@ -97,7 +111,7 @@
 <section class="hero">
   <p style="font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px;">New Collection — 2026</p>
   <h1 class="hero-title">The <em>Hullor</em><br>Experience.</h1>
-  <p class="hero-sub">Discover curated essentials and trending events across Bangladesh. Quality met with purpose.</p>
+  <p class="hero-sub">Discover curated essentials and accessories in Bangladesh. Elegance met with purpose.</p>
   <div class="hero-cta"><a href="#products" class="btn-primary">Shop Collection</a></div>
 </section>
 
@@ -108,7 +122,7 @@
   </div>
   <div class="products-grid">
     <div class="product-card">
-      <div class="product-img-wrap"><img src="assets/images/hero/Product490.png" alt="Fan"></div>
+      <div class="product-img-wrap"><img src="assets/images/hero/Product490.png" alt="Premium Turbo Fan"></div>
       <div class="product-body">
         <h3 class="product-name">Premium Turbo Fan</h3>
         <p style="font-size: 14px; line-height: 1.8; color: var(--muted); margin-bottom: 28px; font-weight: 300;">Compact powerhouse with Type-C fast charging.</p>
@@ -117,7 +131,7 @@
       </div>
     </div>
     <div class="product-card">
-      <div class="product-img-wrap"><img src="assets/images/hero/phone.png" alt="Fan"></div>
+      <div class="product-img-wrap"><img src="assets/images/hero/phone.png" alt="HighVoltage Turbo Fan"></div>
       <div class="product-body">
         <h3 class="product-name">HighVoltage Turbo Fan</h3>
         <p style="font-size: 14px; line-height: 1.8; color: var(--muted); margin-bottom: 28px; font-weight: 300;">LED battery display with powerful airflow.</p>
@@ -154,7 +168,7 @@
 
 <footer>
   <div class="nav-logo" style="color: var(--forest-deep); margin-bottom: 20px;">Hullor<span>.</span></div>
-  <p style="font-size: 13px; color: var(--muted); max-width: 400px; margin: 0 auto;">Connecting people through meaningful experiences and curated products.</p>
+  <p style="font-size: 13px; color: var(--muted); max-width: 400px; margin: 0 auto;">Connecting people through curated products and meaningful experiences.</p>
   <div class="footer-links">
     <a href="about.html">About Us</a>
     <a href="contact.html">Contact Us</a>
