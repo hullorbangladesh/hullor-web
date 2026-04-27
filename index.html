@@ -94,15 +94,86 @@
   .order-total { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-top: 1px solid var(--sand-light); border-bottom: 1px solid var(--sand-light); margin: 24px 0 28px; }
   .total-label { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); font-weight: 500; }
   .total-amount { font-family: "Playfair Display", serif; font-size: 30px; font-weight: 900; color: var(--forest); }
-  footer { background: var(--forest-deep); padding: 60px 24px 44px; text-align: center; }
-  .footer-logo { font-family: "Playfair Display", serif; font-size: 26px; font-weight: 900; color: var(--gold-pale); margin-bottom: 14px; display: block; text-decoration: none; }
-  .footer-logo span { color: var(--gold); }
-  .footer-tagline { font-size: 13px; color: rgba(212,199,168,0.55); max-width: 360px; margin: 0 auto 24px; font-weight: 300; line-height: 1.75; }
-  .footer-rule { width: 36px; height: 1px; background: var(--gold); margin: 0 auto 24px; }
-  .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 32px; flex-wrap: wrap; }
+
+  /* ── Features Strip ── */
+  .features-strip {
+    background: var(--forest-deep);
+    padding: 64px 60px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .features-strip::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 10% 50%, rgba(184,150,62,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 90% 50%, rgba(184,150,62,0.06) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .features-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  .feature-item {
+    padding: 36px 40px;
+    text-align: center;
+    position: relative;
+  }
+  .feature-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 20%;
+    height: 60%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(184,150,62,0.25), transparent);
+  }
+  .feature-icon {
+    font-size: 28px;
+    margin-bottom: 18px;
+    display: block;
+    line-height: 1;
+    filter: grayscale(0.1);
+  }
+  .feature-title {
+    font-family: "Playfair Display", serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold-pale);
+    margin-bottom: 12px;
+    letter-spacing: -0.2px;
+  }
+  .feature-text {
+    font-size: 13px;
+    line-height: 1.8;
+    color: rgba(212,199,168,0.55);
+    font-weight: 300;
+    max-width: 220px;
+    margin: 0 auto;
+  }
+
+  /* ── Footer bottom inside features strip ── */
+  .footer-bottom {
+    max-width: 1100px;
+    margin: 40px auto 0;
+    padding-top: 28px;
+    border-top: 1px solid rgba(184,150,62,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
   .footer-links a { color: rgba(212,199,168,0.45); text-decoration: none; font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; transition: color var(--transition); font-weight: 500; }
   .footer-links a:hover { color: var(--gold-light); }
   .footer-copy { font-size: 11px; color: rgba(212,199,168,0.3); }
+
   @media (max-width: 768px) {
     nav { padding: 14px 20px; }
     .nav-links { display: none; }
@@ -113,6 +184,11 @@
     .product-footer { flex-direction: column; align-items: flex-start; gap: 14px; }
     .btn-buy { width: 100%; text-align: center; }
     .section-rule { margin-bottom: 44px; }
+    .features-strip { padding: 48px 20px 36px; }
+    .features-inner { grid-template-columns: 1fr; gap: 0; }
+    .feature-item { padding: 28px 24px; }
+    .feature-item:not(:last-child)::after { top: auto; right: 10%; bottom: 0; left: 10%; width: 80%; height: 1px; background: linear-gradient(to right, transparent, rgba(184,150,62,0.25), transparent); }
+    .footer-bottom { flex-direction: column; align-items: center; text-align: center; gap: 14px; }
   }
 </style>
 </head>
@@ -171,6 +247,35 @@
     </div>
   </div>
 </section>
+
+<!-- Features Strip (above footer) -->
+<section class="features-strip">
+  <div class="features-inner">
+    <div class="feature-item">
+      <span class="feature-icon">🚚</span>
+      <div class="feature-title">Fast Delivery</div>
+      <p class="feature-text">Quick dispatch on every order. Inside Dhaka or nationwide — we get it to you fast.</p>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">🔄</span>
+      <div class="feature-title">Easy Exchange</div>
+      <p class="feature-text">Wrong size or changed your mind? We'll swap it out — no fuss, no questions asked.</p>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">✦</span>
+      <div class="feature-title">Curated Quality</div>
+      <p class="feature-text">Every product is selected with intention. We stand behind everything we sell.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-links">
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 Hullor Bangladesh. All rights reserved.</p>
+  </div>
+</section>
+
 <div class="overlay" id="orderOverlay">
   <div class="order-panel">
     <button class="close-btn" onclick="closeOrder()">×</button>
@@ -194,16 +299,8 @@
     <button class="btn-buy" onclick="submitOrder()" style="width:100%;padding:17px;font-size:11px;letter-spacing:3px;text-align:center;">Confirm Order</button>
   </div>
 </div>
-<footer>
-  <a class="footer-logo" href="index.html">Hullor<span>.</span></a>
-  <p class="footer-tagline">Connecting people through curated products and meaningful experiences across Bangladesh.</p>
-  <div class="footer-rule"></div>
-  <div class="footer-links">
-    <a href="about.html">About Us</a>
-    <a href="contact.html">Contact Us</a>
-  </div>
-  <p class="footer-copy">&copy; 2026 Hullor Bangladesh. All rights reserved.</p>
-</footer>
+
+
 <script>
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
