@@ -17,11 +17,10 @@ const PRODUCTS = [
       "assets/images/products/premium-fan-2.png",
       "assets/images/products/premium-fan-3.png"
     ],
-    // Colors — set enabled:false to disable a color for this product
     colors: [
-      { name: "Forest Green", hex: "#2C4A35", enabled: true },
-      { name: "Midnight Black", hex: "#1B1E19", enabled: true },
-      { name: "Pearl White",   hex: "#F5F1E8", enabled: true },
+      { name: "Forest Green",  hex: "#2C4A35", enabled: true  },
+      { name: "Midnight Black",hex: "#1B1E19", enabled: true  },
+      { name: "Pearl White",   hex: "#F5F1E8", enabled: true  },
       { name: "Dusty Rose",    hex: "#C4896F", enabled: false }
     ],
     specs: ["Type-C Charging", "3-Speed Modes", "Whisper Quiet", "6h Battery"]
@@ -40,10 +39,10 @@ const PRODUCTS = [
       "assets/images/products/highvoltage-fan-3.png"
     ],
     colors: [
-      { name: "Forest Green", hex: "#2C4A35", enabled: true },
-      { name: "Midnight Black", hex: "#1B1E19", enabled: true },
+      { name: "Forest Green",  hex: "#2C4A35", enabled: true  },
+      { name: "Midnight Black",hex: "#1B1E19", enabled: true  },
       { name: "Pearl White",   hex: "#F5F1E8", enabled: false },
-      { name: "Sky Blue",      hex: "#4A7FA5", enabled: true }
+      { name: "Sky Blue",      hex: "#4A7FA5", enabled: true  }
     ],
     specs: ["LED Battery Display", "2500mAh Cell", "High-RPM Motor", "8h Battery"]
   },
@@ -61,8 +60,8 @@ const PRODUCTS = [
       "assets/images/products/neck-fan-3.png"
     ],
     colors: [
-      { name: "Forest Green", hex: "#2C4A35", enabled: true },
-      { name: "Midnight Black", hex: "#1B1E19", enabled: true },
+      { name: "Forest Green",  hex: "#2C4A35", enabled: true },
+      { name: "Midnight Black",hex: "#1B1E19", enabled: true },
       { name: "Pearl White",   hex: "#F5F1E8", enabled: true },
       { name: "Sky Blue",      hex: "#4A7FA5", enabled: true }
     ],
@@ -82,9 +81,9 @@ const PRODUCTS = [
       "assets/images/products/magnetic-cable-3.png"
     ],
     colors: [
-      { name: "Silver",        hex: "#A8A8A8", enabled: true },
-      { name: "Space Gray",    hex: "#5A5A5A", enabled: true },
-      { name: "Rose Gold",     hex: "#C49A6C", enabled: false }
+      { name: "Silver",     hex: "#A8A8A8", enabled: true  },
+      { name: "Space Gray", hex: "#5A5A5A", enabled: true  },
+      { name: "Rose Gold",  hex: "#C49A6C", enabled: false }
     ],
     specs: ["60W Fast Charge", "3-in-1 Tips", "Braided Nylon", "1.2m Length"]
   },
@@ -102,9 +101,9 @@ const PRODUCTS = [
       "assets/images/products/powerbank-3.png"
     ],
     colors: [
-      { name: "Midnight Black", hex: "#1B1E19", enabled: true },
-      { name: "Pearl White",    hex: "#F5F1E8", enabled: true },
-      { name: "Navy Blue",      hex: "#2C3E6A", enabled: true }
+      { name: "Midnight Black",hex: "#1B1E19", enabled: true },
+      { name: "Pearl White",   hex: "#F5F1E8", enabled: true },
+      { name: "Navy Blue",     hex: "#2C3E6A", enabled: true }
     ],
     specs: ["10,000mAh", "Dual USB-A", "USB-C PD", "Slim 12mm"]
   },
@@ -122,19 +121,20 @@ const PRODUCTS = [
       "assets/images/products/desk-lamp-3.png"
     ],
     colors: [
-      { name: "Matte White",  hex: "#EEEEEE", enabled: true },
-      { name: "Matte Black",  hex: "#2A2A2A", enabled: true },
-      { name: "Dusty Rose",   hex: "#C4896F", enabled: true }
+      { name: "Matte White", hex: "#EEEEEE", enabled: true },
+      { name: "Matte Black", hex: "#2A2A2A", enabled: true },
+      { name: "Dusty Rose",  hex: "#C4896F", enabled: true }
     ],
     specs: ["Touch Dimmer", "3 Color Temps", "5 Brightness", "USB Port"]
   }
 ];
 
-// Delivery options — shared across all pages
+// ── Delivery options — shared across all pages ──────────
 const DELIVERY_OPTIONS = [
   { label: "Inside Dhaka",  charge: 80  },
   { label: "Outside Dhaka", charge: 150 }
 ];
 
-// Google Apps Script URL — paste your deployment URL here
+// ── Google Apps Script URL ──────────────────────────────
+// Paste your Web App deployment URL below
 const SHEET_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID_HERE/exec";
