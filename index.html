@@ -30,6 +30,8 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body { font-family: "DM Sans", sans-serif; background: var(--cream); color: var(--ink); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+  /* ── Nav ── */
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px 60px; background: rgba(245,241,232,0.92); backdrop-filter: blur(18px); border-bottom: 1px solid var(--sand-light); }
   .nav-logo { font-family: "Playfair Display", serif; font-size: 26px; font-weight: 900; color: var(--forest-deep); text-decoration: none; letter-spacing: -0.5px; }
   .nav-logo span { color: var(--gold); }
@@ -48,6 +50,8 @@
   .mobile-menu a { text-decoration: none; color: var(--muted); font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; padding: 14px 0; border-bottom: 1px solid var(--sand-light); transition: color var(--transition); }
   .mobile-menu a:last-child { border-bottom: none; }
   .mobile-menu a:hover { color: var(--forest-deep); }
+
+  /* ── Hero ── */
   .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 120px 40px 80px; position: relative; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(184,150,62,0.10) 0%, transparent 70%), linear-gradient(165deg, var(--cream) 0%, var(--cream-dark) 100%); overflow: hidden; }
   .hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 15% 80%, rgba(44,74,53,0.06) 0%, transparent 45%), radial-gradient(circle at 85% 20%, rgba(184,150,62,0.07) 0%, transparent 45%); pointer-events: none; }
   .hero-eyebrow { font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 22px; font-weight: 500; opacity: 0; animation: fadeUp 0.8s 0.1s forwards; }
@@ -59,6 +63,8 @@
   @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
   .btn-primary { display: inline-block; background: var(--forest-deep); color: var(--gold-pale); padding: 16px 48px; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; border-radius: var(--radius-sm); border: 1.5px solid transparent; transition: var(--transition); box-shadow: 0 4px 20px rgba(26,48,37,0.18); font-weight: 500; }
   .btn-primary:hover { background: var(--forest-mid); border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 10px 32px rgba(26,48,37,0.25); }
+
+  /* ── Products ── */
   #products { padding: 100px 60px; background: var(--cream); }
   .section-eyebrow { text-align: center; font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; font-weight: 500; }
   .section-title { text-align: center; font-family: "Playfair Display", serif; font-size: clamp(32px, 4vw, 46px); color: var(--forest-deep); margin-bottom: 16px; font-weight: 900; }
@@ -78,6 +84,8 @@
   .product-price sup { font-size: 16px; vertical-align: super; font-weight: 700; }
   .btn-buy { flex-shrink: 0; padding: 13px 28px; background: var(--forest-deep); color: var(--gold-pale); border: 1.5px solid transparent; border-radius: var(--radius-sm); font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; cursor: pointer; font-family: "DM Sans", sans-serif; font-weight: 500; transition: var(--transition); box-shadow: 0 2px 12px rgba(26,48,37,0.14); }
   .btn-buy:hover { background: var(--forest-mid); border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,48,37,0.22); }
+
+  /* ── Order Overlay ── */
   .overlay { position: fixed; inset: 0; z-index: 200; background: rgba(26,48,37,0.52); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; padding: 20px; }
   .order-panel { background: var(--white); width: min(480px, 100%); border-radius: var(--radius-md); padding: 44px 40px; border-top: 3px solid var(--gold); position: relative; max-height: 92vh; overflow-y: auto; box-shadow: 0 32px 80px rgba(26,48,37,0.28); animation: panelIn 0.35s cubic-bezier(0.4,0,0.2,1); }
   @keyframes panelIn { from { opacity: 0; transform: translateY(24px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -95,80 +103,43 @@
   .total-label { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); font-weight: 500; }
   .total-amount { font-family: "Playfair Display", serif; font-size: 30px; font-weight: 900; color: var(--forest); }
 
-  /* ── Features Strip ── */
-  .features-strip {
-    background: var(--forest-deep);
-    padding: 64px 60px 48px;
-    position: relative;
-    overflow: hidden;
-  }
-  .features-strip::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      radial-gradient(circle at 10% 50%, rgba(184,150,62,0.08) 0%, transparent 50%),
-      radial-gradient(circle at 90% 50%, rgba(184,150,62,0.06) 0%, transparent 50%);
-    pointer-events: none;
-  }
-  .features-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    position: relative;
-  }
-  .feature-item {
-    padding: 36px 40px;
-    text-align: center;
-    position: relative;
-  }
-  .feature-item:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 20%;
-    height: 60%;
-    width: 1px;
-    background: linear-gradient(to bottom, transparent, rgba(184,150,62,0.25), transparent);
-  }
-  .feature-icon {
-    font-size: 28px;
-    margin-bottom: 18px;
-    display: block;
-    line-height: 1;
-    filter: grayscale(0.1);
-  }
-  .feature-title {
-    font-family: "Playfair Display", serif;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--gold-pale);
-    margin-bottom: 12px;
-    letter-spacing: -0.2px;
-  }
-  .feature-text {
-    font-size: 13px;
-    line-height: 1.8;
-    color: rgba(212,199,168,0.55);
-    font-weight: 300;
-    max-width: 220px;
-    margin: 0 auto;
-  }
+  /* ── Submit button ── */
+  .btn-submit { width: 100%; padding: 17px; font-size: 11px; letter-spacing: 3px; text-align: center; position: relative; }
+  .btn-submit:disabled { opacity: 0.65; cursor: not-allowed; transform: none !important; }
+  .btn-spinner { display: none; width: 16px; height: 16px; border: 2px solid rgba(236,217,142,0.3); border-top-color: var(--gold-pale); border-radius: 50%; animation: spin 0.7s linear infinite; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .btn-submit.loading .btn-label { visibility: hidden; }
+  .btn-submit.loading .btn-spinner { display: block; }
+  @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
 
-  /* ── Footer bottom inside features strip ── */
-  .footer-bottom {
-    max-width: 1100px;
-    margin: 40px auto 0;
-    padding-top: 28px;
-    border-top: 1px solid rgba(184,150,62,0.18);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
+  /* ── Thank You Dialog ── */
+  .thankyou-overlay { position: fixed; inset: 0; z-index: 300; background: rgba(26,48,37,0.60); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; padding: 20px; }
+  .thankyou-panel { background: var(--white); width: min(440px, 100%); border-radius: var(--radius-md); padding: 52px 40px 44px; border-top: 3px solid var(--gold); text-align: center; position: relative; box-shadow: 0 32px 80px rgba(26,48,37,0.32); animation: panelIn 0.4s cubic-bezier(0.4,0,0.2,1); }
+  .thankyou-icon { width: 68px; height: 68px; border-radius: 50%; background: linear-gradient(135deg, var(--forest-deep), var(--forest-mid)); display: flex; align-items: center; justify-content: center; margin: 0 auto 28px; box-shadow: 0 8px 28px rgba(26,48,37,0.22); }
+  .thankyou-icon svg { width: 32px; height: 32px; }
+  .thankyou-eyebrow { font-size: 9px; letter-spacing: 3.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; font-weight: 500; }
+  .thankyou-title { font-family: "Playfair Display", serif; font-size: 30px; font-weight: 900; color: var(--forest-deep); margin-bottom: 16px; line-height: 1.2; }
+  .thankyou-divider { width: 40px; height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-pale)); margin: 0 auto 20px; border-radius: 99px; }
+  .thankyou-msg { font-size: 15px; color: var(--muted); font-weight: 300; line-height: 1.8; margin-bottom: 8px; }
+  .thankyou-phone { font-family: "Playfair Display", serif; font-size: 18px; font-weight: 700; color: var(--forest-deep); margin-bottom: 32px; }
+  .thankyou-summary { background: var(--cream); border: 1px solid var(--sand-light); border-radius: var(--radius-md); padding: 18px 22px; text-align: left; margin-bottom: 32px; }
+  .ty-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; font-size: 13px; padding: 5px 0; }
+  .ty-row .ty-key { color: var(--muted); font-weight: 300; white-space: nowrap; }
+  .ty-row .ty-val { color: var(--forest-deep); font-weight: 500; text-align: right; }
+  .ty-divider { height: 1px; background: var(--sand-light); margin: 10px 0; }
+  .ty-row.ty-total .ty-val { font-family: "Playfair Display", serif; font-size: 20px; font-weight: 900; color: var(--forest); }
+  .btn-thankyou-close { display: inline-block; background: var(--forest-deep); color: var(--gold-pale); padding: 15px 48px; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; border: 1.5px solid transparent; border-radius: var(--radius-sm); cursor: pointer; font-family: "DM Sans", sans-serif; font-weight: 500; transition: var(--transition); box-shadow: 0 4px 20px rgba(26,48,37,0.18); }
+  .btn-thankyou-close:hover { background: var(--forest-mid); border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(26,48,37,0.25); }
+
+  /* ── Features Strip ── */
+  .features-strip { background: var(--forest-deep); padding: 64px 60px 48px; position: relative; overflow: hidden; }
+  .features-strip::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 10% 50%, rgba(184,150,62,0.08) 0%, transparent 50%), radial-gradient(circle at 90% 50%, rgba(184,150,62,0.06) 0%, transparent 50%); pointer-events: none; }
+  .features-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; position: relative; }
+  .feature-item { padding: 36px 40px; text-align: center; position: relative; }
+  .feature-item:not(:last-child)::after { content: ''; position: absolute; right: 0; top: 20%; height: 60%; width: 1px; background: linear-gradient(to bottom, transparent, rgba(184,150,62,0.25), transparent); }
+  .feature-icon { font-size: 28px; margin-bottom: 18px; display: block; line-height: 1; filter: grayscale(0.1); }
+  .feature-title { font-family: "Playfair Display", serif; font-size: 18px; font-weight: 700; color: var(--gold-pale); margin-bottom: 12px; letter-spacing: -0.2px; }
+  .feature-text { font-size: 13px; line-height: 1.8; color: rgba(212,199,168,0.55); font-weight: 300; max-width: 220px; margin: 0 auto; }
+  .footer-bottom { max-width: 1100px; margin: 40px auto 0; padding-top: 28px; border-top: 1px solid rgba(184,150,62,0.18); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
   .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
   .footer-links a { color: rgba(212,199,168,0.45); text-decoration: none; font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; transition: color var(--transition); font-weight: 500; }
   .footer-links a:hover { color: var(--gold-light); }
@@ -181,6 +152,7 @@
     .hero { padding: 100px 24px 64px; }
     #products { padding: 64px 20px; }
     .order-panel { padding: 36px 20px; }
+    .thankyou-panel { padding: 40px 20px 36px; }
     .product-footer { flex-direction: column; align-items: flex-start; gap: 14px; }
     .btn-buy { width: 100%; text-align: center; }
     .section-rule { margin-bottom: 44px; }
@@ -193,6 +165,7 @@
 </style>
 </head>
 <body>
+
 <nav>
   <a class="nav-logo" href="index.html">Hullor<span>.</span></a>
   <div class="nav-links">
@@ -204,11 +177,13 @@
     <span></span><span></span><span></span>
   </button>
 </nav>
+
 <div class="mobile-menu" id="mobileMenu">
   <a href="#products">Store</a>
   <a href="about.html">Our Story</a>
   <a href="contact.html">Contact</a>
 </div>
+
 <section class="hero">
   <p class="hero-eyebrow">New Collection — 2026</p>
   <h1 class="hero-title">The <em>Hullor</em><br>Experience.</h1>
@@ -216,6 +191,7 @@
   <p class="hero-sub">Discover curated essentials and accessories in Bangladesh. Elegance met with purpose.</p>
   <div class="hero-cta"><a href="#products" class="btn-primary">Shop Collection</a></div>
 </section>
+
 <section id="products">
   <p class="section-eyebrow">Handpicked for you</p>
   <h2 class="section-title">Featured Products</h2>
@@ -248,7 +224,6 @@
   </div>
 </section>
 
-<!-- Features Strip (above footer) -->
 <section class="features-strip">
   <div class="features-inner">
     <div class="feature-item">
@@ -276,43 +251,195 @@
   </div>
 </section>
 
+<!-- Order Overlay -->
 <div class="overlay" id="orderOverlay">
   <div class="order-panel">
     <button class="close-btn" onclick="closeOrder()">×</button>
     <p class="panel-eyebrow">Place Your Order</p>
     <h2 class="panel-title">Almost there.</h2>
     <p class="panel-product" id="orderItemName"></p>
-    <div class="form-group"><label>Full Name *</label><input type="text" id="name" placeholder="Your full name"></div>
-    <div class="form-group"><label>Phone Number *</label><input type="tel" id="phone" placeholder="+880 1X XX XXX XXX"></div>
-    <div class="form-group"><label>Delivery Address *</label><textarea id="address" placeholder="House, road, area…"></textarea></div>
+    <div class="form-group">
+      <label>Full Name *</label>
+      <input type="text" id="name" placeholder="Your full name">
+    </div>
+    <div class="form-group">
+      <label>Phone Number *</label>
+      <input type="tel" id="phone" placeholder="+880 1X XX XXX XXX">
+    </div>
+    <div class="form-group">
+      <label>Delivery Address *</label>
+      <textarea id="address" placeholder="House, road, area…"></textarea>
+    </div>
     <div class="form-group">
       <label>Delivery Area *</label>
       <select id="delivery" onchange="updateTotal()">
-        <option value="60">Inside Dhaka (+৳60)</option>
+        <option value="80">Inside Dhaka (+80)</option>
         <option value="150">Outside Dhaka (+৳150)</option>
       </select>
+    </div>
+    <div class="form-group">
+      <label>Note <span style="font-size:9px;opacity:0.55;letter-spacing:1px;text-transform:none;">(Optional)</span></label>
+      <textarea id="note" placeholder="Special instructions, colour preference, etc." style="min-height:72px;"></textarea>
     </div>
     <div class="order-total">
       <span class="total-label">Total</span>
       <span class="total-amount" id="totalPrice">৳0</span>
     </div>
-    <button class="btn-buy" onclick="submitOrder()" style="width:100%;padding:17px;font-size:11px;letter-spacing:3px;text-align:center;">Confirm Order</button>
+    <button class="btn-buy btn-submit" id="confirmBtn" onclick="submitOrder()">
+      <span class="btn-label">Confirm Order</span>
+      <span class="btn-spinner"></span>
+    </button>
   </div>
 </div>
 
+<!-- Thank You Dialog -->
+<div class="thankyou-overlay" id="thankyouOverlay">
+  <div class="thankyou-panel">
+    <div class="thankyou-icon">
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 16.5L12.5 23L26 9" stroke="#ECD98E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <p class="thankyou-eyebrow">Order Confirmed</p>
+    <h2 class="thankyou-title">Thank you,<br><span id="tyName">friend</span>!</h2>
+    <div class="thankyou-divider"></div>
+    <p class="thankyou-msg">Your order is received. We'll contact you shortly at</p>
+    <p class="thankyou-phone" id="tyPhone">—</p>
+    <div class="thankyou-summary" id="tySummary"></div>
+    <button class="btn-thankyou-close" onclick="closeThankyou()">Continue Shopping</button>
+  </div>
+</div>
 
 <script>
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
-  const products = [{ name: 'Premium Turbo Fan', price: 490 }, { name: 'HighVoltage Turbo Fan', price: 590 }];
+  /* ════════════════════════════════════════════════════════
+     CONFIG — paste your Apps Script Web App URL here
+     See the README instructions below the code
+  ════════════════════════════════════════════════════════ */
+  const SHEET_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID_HERE/exec";
+
+  const products = [
+    { name: "Premium Turbo Fan",     price: 490 },
+    { name: "HighVoltage Turbo Fan", price: 590 }
+  ];
   let selectedIdx = 0;
-  function openOrder(idx) { selectedIdx = idx; document.getElementById('orderItemName').innerText = products[idx].name; ['name','phone','address'].forEach(id => document.getElementById(id).value = ''); document.getElementById('delivery').value = '60'; document.getElementById('orderOverlay').style.display = 'flex'; updateTotal(); }
-  function closeOrder() { document.getElementById('orderOverlay').style.display = 'none'; }
-  function updateTotal() { const d = parseInt(document.getElementById('delivery').value); document.getElementById('totalPrice').innerText = '৳' + (products[selectedIdx].price + d).toLocaleString('en-BD'); }
-  function submitOrder() { const n = document.getElementById('name').value.trim(), p = document.getElementById('phone').value.trim(), a = document.getElementById('address').value.trim(); if (!n || !p || !a) { alert('Please fill in all required fields.'); return; } alert('✅ Order Received!\nWe will contact you at ' + p + ' shortly. Thank you, ' + n + '!'); closeOrder(); }
-  document.getElementById('orderOverlay').addEventListener('click', function(e) { if (e.target === this) closeOrder(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOrder(); });
+
+  /* ── Hamburger ── */
+  const hamburger = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobileMenu");
+  hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("open");
+    mobileMenu.classList.toggle("open");
+  });
+
+  /* ── Order panel ── */
+  function openOrder(idx) {
+    selectedIdx = idx;
+    document.getElementById("orderItemName").innerText = products[idx].name;
+    ["name","phone","address","note"].forEach(id => document.getElementById(id).value = "");
+    document.getElementById("delivery").value = "60";
+    document.getElementById("orderOverlay").style.display = "flex";
+    updateTotal();
+  }
+  function closeOrder() {
+    document.getElementById("orderOverlay").style.display = "none";
+  }
+  function updateTotal() {
+    const charge = parseInt(document.getElementById("delivery").value);
+    document.getElementById("totalPrice").innerText = "৳" + (products[selectedIdx].price + charge).toLocaleString("en-BD");
+  }
+
+  /* ── Submit ── */
+  async function submitOrder() {
+    const name    = document.getElementById("name").value.trim();
+    const phone   = document.getElementById("phone").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const note    = document.getElementById("note").value.trim();
+    const sel     = document.getElementById("delivery");
+    const area    = sel.options[sel.selectedIndex].text;
+    const charge  = parseInt(sel.value);
+    const total   = products[selectedIdx].price + charge;
+
+    if (!name || !phone || !address) {
+      highlightMissing(name, phone, address);
+      return;
+    }
+
+    const btn = document.getElementById("confirmBtn");
+    btn.classList.add("loading");
+    btn.disabled = true;
+
+    const payload = {
+      Timestamp : new Date().toLocaleString("en-BD", { timeZone: "Asia/Dhaka" }),
+      Product   : products[selectedIdx].name,
+      Price     : products[selectedIdx].price,
+      Name      : name,
+      Phone     : phone,
+      Address   : address,
+      Area      : area,
+      Delivery  : charge,
+      Total     : total,
+      Note      : note || "—"
+    };
+
+    try {
+      await fetch(SHEET_URL, {
+        method : "POST",
+        mode   : "no-cors",   /* no-cors — request goes through, response unreadable (CORS-safe) */
+        headers: { "Content-Type": "application/json" },
+        body   : JSON.stringify(payload)
+      });
+    } catch (_) { /* network errors silently ignored; order still shown as confirmed */ }
+
+    btn.classList.remove("loading");
+    btn.disabled = false;
+    closeOrder();
+    showThankyou({ name, phone, product: products[selectedIdx].name, price: products[selectedIdx].price, area, charge, total, note });
+  }
+
+  function highlightMissing(name, phone, address) {
+    const map = { name, phone, address };
+    Object.entries(map).forEach(([id, val]) => {
+      if (val) return;
+      const el = document.getElementById(id);
+      el.style.borderColor = "#c0392b";
+      el.style.boxShadow   = "0 0 0 3px rgba(192,57,43,0.13)";
+      el.animate(
+        [{transform:"translateX(-5px)"},{transform:"translateX(5px)"},{transform:"translateX(-4px)"},{transform:"translateX(0)"}],
+        {duration: 320, easing: "ease-out"}
+      );
+      el.addEventListener("input", () => { el.style.borderColor = ""; el.style.boxShadow = ""; }, { once: true });
+    });
+  }
+
+  /* ── Thank You ── */
+  function showThankyou({ name, phone, product, price, area, charge, total, note }) {
+    document.getElementById("tyName").innerText  = name.split(" ")[0];
+    document.getElementById("tyPhone").innerText = phone;
+
+    const rows = [
+      ["Product",  product],
+      ["Price",    "৳" + price.toLocaleString("en-BD")],
+      ["Delivery", area + " (৳" + charge + ")"],
+    ];
+    if (note) rows.push(["Note", note]);
+
+    const rowsHTML = rows.map(([k, v]) =>
+      `<div class="ty-row"><span class="ty-key">${k}</span><span class="ty-val">${v}</span></div>`
+    ).join("") +
+    `<div class="ty-divider"></div>
+     <div class="ty-row ty-total"><span class="ty-key">Total</span><span class="ty-val">৳${total.toLocaleString("en-BD")}</span></div>`;
+
+    document.getElementById("tySummary").innerHTML = rowsHTML;
+    document.getElementById("thankyouOverlay").style.display = "flex";
+  }
+  function closeThankyou() {
+    document.getElementById("thankyouOverlay").style.display = "none";
+  }
+
+  /* ── Backdrop & Escape ── */
+  document.getElementById("orderOverlay").addEventListener("click",    function(e){ if(e.target===this) closeOrder(); });
+  document.getElementById("thankyouOverlay").addEventListener("click", function(e){ if(e.target===this) closeThankyou(); });
+  document.addEventListener("keydown", e => { if(e.key==="Escape"){ closeOrder(); closeThankyou(); } });
 </script>
 </body>
 </html>
