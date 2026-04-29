@@ -7,7 +7,6 @@
 <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg"/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
 <style>
-/* ── CSS Variables ─────────────────────────────────────── */
 :root {
   --cream: #F5F1E8;
   --cream-dark: #EDE7D5;
@@ -29,7 +28,6 @@
   --transition: 0.32s cubic-bezier(0.4,0,0.2,1);
 }
 
-/* ── Reset ─────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
@@ -39,7 +37,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── NAV ───────────────────────────────────────────────── */
+/* ── NAV ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
@@ -72,7 +70,6 @@ nav {
 .nav-links a:hover::after,
 .nav-links a.active::after { transform: scaleX(1); }
 
-/* Hamburger */
 .hamburger {
   display: none; flex-direction: column; gap: 5px;
   background: none; border: none; cursor: pointer; padding: 4px;
@@ -86,7 +83,6 @@ nav {
 .hamburger.open span:nth-child(2) { opacity: 0; }
 .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* Mobile menu */
 .mobile-menu {
   display: none;
   position: fixed; top: 57px; left: 0; right: 0; z-index: 99;
@@ -104,7 +100,7 @@ nav {
 }
 .mobile-menu a:last-child { border-bottom: none; }
 
-/* ── PAGE HEADER ───────────────────────────────────────── */
+/* ── PAGE HEADER ── */
 .page-header {
   padding: 140px 60px 60px;
   background: linear-gradient(160deg, var(--cream) 0%, var(--cream-dark) 100%);
@@ -132,7 +128,7 @@ nav {
   margin: 0 auto; border-radius: 99px;
 }
 
-/* ── TOOLBAR ───────────────────────────────────────────── */
+/* ── TOOLBAR ── */
 .toolbar {
   padding: 32px 60px;
   background: var(--white);
@@ -144,7 +140,6 @@ nav {
   display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
 }
 
-/* Search */
 .search-wrap { position: relative; flex: 1; min-width: 220px; }
 .search-wrap svg {
   position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
@@ -163,7 +158,6 @@ nav {
 #searchInput:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(184,150,62,0.12); }
 #searchInput::placeholder { color: var(--muted); opacity: 0.7; }
 
-/* Category pills */
 .cat-pills { display: flex; gap: 8px; flex-wrap: wrap; }
 .cat-pill {
   padding: 9px 18px;
@@ -178,7 +172,6 @@ nav {
 .cat-pill:hover { border-color: var(--gold); color: var(--forest); }
 .cat-pill.active { background: var(--forest-deep); color: var(--gold-pale); border-color: var(--forest-deep); }
 
-/* Sort select */
 .sort-select {
   padding: 11px 36px 11px 16px;
   border: 1.5px solid var(--sand-light);
@@ -194,11 +187,10 @@ nav {
 }
 .sort-select:focus { border-color: var(--gold); }
 
-/* Results count */
 .results-count { font-size: 12px; color: var(--muted); white-space: nowrap; letter-spacing: 0.5px; }
 .results-count strong { color: var(--forest-deep); }
 
-/* ── GRID ──────────────────────────────────────────────── */
+/* ── GRID ── */
 .shop-main { max-width: 1280px; margin: 0 auto; padding: 52px 60px 100px; }
 .products-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 28px; }
 
@@ -276,13 +268,12 @@ nav {
 }
 .btn-view:hover { background: var(--forest-mid); }
 
-/* Empty state */
 .empty-state { grid-column: 1 / -1; text-align: center; padding: 80px 40px; }
 .empty-icon { font-size: 52px; margin-bottom: 20px; display: block; }
 .empty-title { font-family: "Playfair Display", serif; font-size: 26px; color: var(--forest-deep); margin-bottom: 10px; }
 .empty-text { font-size: 14px; color: var(--muted); font-weight: 300; }
 
-/* ── FOOTER ────────────────────────────────────────────── */
+/* ── FOOTER ── */
 .site-footer {
   background: var(--forest-deep);
   padding: 52px 60px 40px;
@@ -310,7 +301,7 @@ nav {
 .footer-links a:hover { color: var(--gold-light); }
 .footer-copy { font-size: 11px; color: rgba(212,199,168,0.3); }
 
-/* ── Responsive ────────────────────────────────────────── */
+/* ── Responsive ── */
 @media (max-width: 1100px) { .products-grid { grid-template-columns: repeat(3,1fr); } }
 @media (max-width: 800px) {
   .products-grid { grid-template-columns: repeat(2,1fr); }
@@ -396,7 +387,6 @@ nav {
 
 <script src="assets/js/products-data.js"></script>
 <script>
-  /* ── Nav ─────────────────────────────────────────────── */
   const hamburger = document.getElementById("hamburger");
   const mobileMenu = document.getElementById("mobileMenu");
   hamburger.addEventListener("click", () => {
@@ -404,7 +394,6 @@ nav {
     mobileMenu.classList.toggle("open");
   });
 
-  /* ── Category pills (auto-generated from data) ───────── */
   const cats = [...new Set(PRODUCTS.map(p => p.category))];
   const pillsEl = document.getElementById("catPills");
   cats.forEach(c => {
@@ -416,7 +405,6 @@ nav {
     pillsEl.appendChild(b);
   });
 
-  /* ── Filter state ────────────────────────────────────── */
   let activeCategory = "all";
 
   function setCategory(cat) {

@@ -7,7 +7,6 @@
 <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg"/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
 <style>
-/* ── CSS Variables ─────────────────────────────────────── */
 :root {
   --cream: #F5F1E8;
   --cream-dark: #EDE7D5;
@@ -31,7 +30,6 @@
   --error: #C0392B;
 }
 
-/* ── Reset ─────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
@@ -41,7 +39,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── NAV ───────────────────────────────────────────────── */
+/* ── NAV ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
   display: flex; align-items: center; justify-content: space-between;
@@ -72,7 +70,6 @@ nav {
 .nav-links a:hover { color: var(--forest); }
 .nav-links a:hover::after { transform: scaleX(1); }
 
-/* Hamburger */
 .hamburger {
   display: none; flex-direction: column; gap: 5px;
   background: none; border: none; cursor: pointer; padding: 4px;
@@ -86,7 +83,6 @@ nav {
 .hamburger.open span:nth-child(2) { opacity: 0; }
 .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* Mobile menu */
 .mobile-menu {
   display: none;
   position: fixed; top: 57px; left: 0; right: 0; z-index: 199;
@@ -104,7 +100,7 @@ nav {
 }
 .mobile-menu a:last-child { border-bottom: none; }
 
-/* ── BREADCRUMB ────────────────────────────────────────── */
+/* ── BREADCRUMB ── */
 .breadcrumb { padding: 100px 60px 0; max-width: 1280px; margin: 0 auto; }
 .breadcrumb-inner {
   display: flex; gap: 8px; align-items: center;
@@ -115,7 +111,7 @@ nav {
 .breadcrumb-inner a:hover { color: var(--forest); }
 .breadcrumb-inner span { color: var(--sand); }
 
-/* ── PRODUCT LAYOUT ────────────────────────────────────── */
+/* ── PRODUCT LAYOUT ── */
 .product-page {
   max-width: 1280px; margin: 0 auto;
   padding: 36px 60px 100px;
@@ -123,7 +119,7 @@ nav {
   gap: 64px; align-items: start;
 }
 
-/* ── GALLERY ───────────────────────────────────────────── */
+/* ── GALLERY ── */
 .gallery { position: sticky; top: 100px; }
 .gallery-main {
   width: 100%; aspect-ratio: 1/1;
@@ -154,7 +150,7 @@ nav {
 .gallery-thumb.active { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(184,150,62,0.18); }
 .gallery-thumb img { width: 100%; height: 100%; object-fit: contain; padding: 10px; }
 
-/* ── PRODUCT INFO ──────────────────────────────────────── */
+/* ── PRODUCT INFO ── */
 .info-eyebrow {
   font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
   color: var(--gold); margin-bottom: 12px; font-weight: 500;
@@ -189,7 +185,6 @@ nav {
   color: var(--muted); font-weight: 300; margin-bottom: 32px;
 }
 
-/* Spec chips */
 .info-specs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
 .spec-chip {
   padding: 7px 14px;
@@ -198,7 +193,7 @@ nav {
   color: var(--forest-deep); background: var(--white); font-weight: 500;
 }
 
-/* ── COLOUR PICKER ─────────────────────────────────────── */
+/* ── COLOUR PICKER ── */
 .color-section { margin-bottom: 36px; }
 .color-label {
   font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
@@ -225,7 +220,7 @@ nav {
   border-radius: 50%;
 }
 
-/* ── ORDER BUTTON ──────────────────────────────────────── */
+/* ── ORDER BUTTON ── */
 .btn-order {
   width: 100%; padding: 18px;
   background: var(--forest-deep); color: var(--gold-pale);
@@ -242,14 +237,11 @@ nav {
   box-shadow: 0 10px 32px rgba(26,48,37,0.25);
 }
 
-/* Trust row */
 .trust-row { display: flex; gap: 24px; margin-top: 20px; flex-wrap: wrap; }
 .trust-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted); font-weight: 300; }
 .trust-item span:first-child { font-size: 15px; }
 
-/* ══════════════════════════════════════════════════════════
-   ORDER OVERLAY
-══════════════════════════════════════════════════════════ */
+/* ── ORDER OVERLAY ── */
 .overlay {
   position: fixed; inset: 0; z-index: 300;
   background: rgba(15,28,21,0.65); backdrop-filter: blur(12px);
@@ -271,7 +263,6 @@ nav {
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Panel header */
 .panel-header {
   background: linear-gradient(135deg, var(--forest-deep), var(--forest-mid));
   padding: 32px 36px 28px; position: relative;
@@ -298,7 +289,6 @@ nav {
   font-size: 24px; font-weight: 700; color: #fff; line-height: 1.2;
 }
 
-/* Mini product pill */
 .panel-product-pill {
   display: flex; align-items: center; gap: 12px;
   background: rgba(255,255,255,0.1);
@@ -322,10 +312,8 @@ nav {
   font-size: 18px; font-weight: 900; color: var(--gold-pale); flex-shrink: 0;
 }
 
-/* Panel body */
 .panel-body { padding: 28px 36px 36px; max-height: calc(92vh - 200px); overflow-y: auto; }
 
-/* Error banner */
 .error-banner {
   background: #FEF0EF; border: 1.5px solid #F5C6C1;
   border-radius: var(--radius-sm); padding: 14px 16px;
@@ -345,7 +333,6 @@ nav {
 .error-text { font-size: 13px; color: var(--error); font-weight: 400; line-height: 1.5; }
 .error-text strong { font-weight: 600; }
 
-/* Form */
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
 .form-group { margin-bottom: 14px; }
 .form-group:last-child { margin-bottom: 0; }
@@ -375,7 +362,6 @@ nav {
 .field-error { font-size: 11px; color: var(--error); margin-top: 5px; display: none; }
 .field-error.show { display: block; }
 
-/* Order total */
 .order-total {
   display: flex; align-items: center; justify-content: space-between;
   padding: 16px 0;
@@ -394,7 +380,6 @@ nav {
   font-size: 32px; font-weight: 900; color: var(--forest);
 }
 
-/* Submit button */
 .btn-submit {
   width: 100%; padding: 17px;
   background: var(--forest-deep); color: var(--gold-pale);
@@ -422,9 +407,7 @@ nav {
 .btn-submit.loading .btn-spinner { display: block; }
 @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
 
-/* ══════════════════════════════════════════════════════════
-   THANK YOU OVERLAY
-══════════════════════════════════════════════════════════ */
+/* ── THANK YOU OVERLAY ── */
 .thankyou-overlay {
   position: fixed; inset: 0; z-index: 400;
   background: rgba(15,28,21,0.72); backdrop-filter: blur(14px);
@@ -442,7 +425,6 @@ nav {
   animation: panelIn 0.42s cubic-bezier(0.34,1.56,0.64,1);
 }
 
-/* Shimmer confetti strip */
 .ty-confetti {
   height: 6px;
   background: linear-gradient(90deg, var(--gold-pale), var(--gold), var(--forest-mid), var(--gold-pale));
@@ -483,7 +465,7 @@ nav {
 }
 .btn-ty-close:hover { background: var(--forest-mid); border-color: var(--gold); transform: translateY(-2px); }
 
-/* ── FOOTER ────────────────────────────────────────────── */
+/* ── FOOTER ── */
 .site-footer { background: var(--forest-deep); padding: 52px 60px 40px; }
 .footer-inner {
   max-width: 1280px; margin: 0 auto;
@@ -501,7 +483,7 @@ nav {
 .footer-links a:hover { color: var(--gold-light); }
 .footer-copy { font-size: 11px; color: rgba(212,199,168,0.3); }
 
-/* ── Responsive ────────────────────────────────────────── */
+/* ── Responsive ── */
 @media (max-width: 900px) {
   .product-page { grid-template-columns: 1fr; gap: 36px; padding: 24px 24px 80px; }
   .gallery { position: static; }
@@ -552,8 +534,6 @@ nav {
 
 <!-- PRODUCT PAGE -->
 <div class="product-page">
-
-  <!-- Gallery -->
   <div class="gallery">
     <div class="gallery-main">
       <img id="mainImg" src="" alt="Product">
@@ -561,7 +541,6 @@ nav {
     <div class="gallery-thumbs" id="thumbs"></div>
   </div>
 
-  <!-- Info -->
   <div class="product-info">
     <p class="info-eyebrow">Hullor Bangladesh</p>
     <span class="info-badge" id="infoBadge"></span>
@@ -621,7 +600,6 @@ nav {
     </div>
 
     <div class="panel-body">
-      <!-- Error banner -->
       <div class="error-banner" id="errorBanner">
         <span class="error-icon">⚠️</span>
         <div class="error-text" id="errorText"><strong>Please fix the following:</strong><br></div>
@@ -648,9 +626,7 @@ nav {
 
       <div class="form-group">
         <label>Delivery Area <span class="required">*</span></label>
-        <select id="delivery" onchange="updateTotal()">
-          <!-- Injected by JS -->
-        </select>
+        <select id="delivery" onchange="updateTotal()"></select>
       </div>
 
       <div class="form-group">
@@ -697,7 +673,6 @@ nav {
 
 <script src="assets/js/products-data.js"></script>
 <script>
-  /* ── Nav ─────────────────────────────────────────────── */
   const hamburger = document.getElementById("hamburger");
   const mobileMenu = document.getElementById("mobileMenu");
   hamburger.addEventListener("click", () => {
@@ -705,7 +680,6 @@ nav {
     mobileMenu.classList.toggle("open");
   });
 
-  /* ── Load product from URL ───────────────────────────── */
   const params  = new URLSearchParams(location.search);
   const pid     = params.get("id");
   const product = PRODUCTS.find(p => p.id === pid);
@@ -718,7 +692,6 @@ nav {
         <a href="products.html" style="color:var(--gold)">← Back to store</a>
       </div>`;
   } else {
-    /* Page meta */
     document.title = product.name + " — Hullor Bangladesh";
     document.getElementById("breadcrumbName").textContent = product.name;
     document.getElementById("infoBadge").textContent      = product.badge;
@@ -727,7 +700,6 @@ nav {
     document.getElementById("infoDesc").textContent       = product.longDesc;
     document.getElementById("infoSpecs").innerHTML        = product.specs.map(s => `<span class="spec-chip">${s}</span>`).join("");
 
-    /* ── Gallery ─────────────────────────────────────── */
     let activeImg = 0;
     const mainImg = document.getElementById("mainImg");
     mainImg.src = product.images[0];
@@ -750,7 +722,6 @@ nav {
     }
     window.switchImg = switchImg;
 
-    /* ── Colours ─────────────────────────────────────── */
     let selectedColor = null;
     const enabledColors  = product.colors ? product.colors.filter(c => c.enabled) : [];
     const swatchesEl     = document.getElementById("colorSwatches");
@@ -782,7 +753,6 @@ nav {
     }
     window.selectColor = selectColor;
 
-    /* ── Delivery options ────────────────────────────── */
     const sel = document.getElementById("delivery");
     DELIVERY_OPTIONS.forEach(d => {
       const opt = document.createElement("option");
@@ -791,7 +761,6 @@ nav {
       sel.appendChild(opt);
     });
 
-    /* ── Order panel helpers ─────────────────────────── */
     function openOrder() {
       ["fname", "phone", "address"].forEach(clearField);
       document.getElementById("note").value = "";
@@ -816,7 +785,6 @@ nav {
     }
     window.updateTotal = updateTotal;
 
-    /* ── Validation helpers ──────────────────────────── */
     function clearField(id) {
       const el = document.getElementById(id);
       if (el) { el.value = ""; el.classList.remove("error"); }
@@ -836,7 +804,6 @@ nav {
       document.getElementById(id + "Err").classList.toggle("show", show);
     }
 
-    /* ── Submit ──────────────────────────────────────── */
     async function submitOrder() {
       const fname   = document.getElementById("fname").value.trim();
       const phone   = document.getElementById("phone").value.trim();
@@ -886,7 +853,6 @@ nav {
     }
     window.submitOrder = submitOrder;
 
-    /* ── Thank You ───────────────────────────────────── */
     function showThankyou({ name, phone, product: pname, color, price, area, charge, total, note }) {
       document.getElementById("tyName").textContent  = name.split(" ")[0];
       document.getElementById("tyPhone").textContent = phone;
@@ -910,7 +876,6 @@ nav {
     window.closeThankyou = closeThankyou;
   }
 
-  /* ── Backdrop & Escape key ───────────────────────────── */
   document.getElementById("orderOverlay").addEventListener("click", function(e) { if (e.target === this) closeOrder(); });
   document.getElementById("thankyouOverlay").addEventListener("click", function(e) { if (e.target === this) closeThankyou(); });
   document.addEventListener("keydown", e => { if (e.key === "Escape") { closeOrder(); closeThankyou(); } });

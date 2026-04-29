@@ -1,18 +1,13 @@
 {
-  "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/about", "destination": "/about.html" },
-    { "source": "/privacy", "destination": "/privacy.html" },
-    { "source": "/terms", "destination": "/terms.html" },
-    { "source": "/contact", "destination": "/contact.html" },
-    { "source": "/payment", "destination": "/payment.html" }
+  "version": 2,
+  "builds": [
+    { "src": "**/*.html", "use": "@vercel/static" },
+    { "src": "assets/**", "use": "@vercel/static" }
   ],
-  "redirects": [
-    { "source": "/index.html", "destination": "/", "permanent": true },
-    { "source": "/about.html", "destination": "/about", "permanent": true },
-    { "source": "/privacy.html", "destination": "/privacy", "permanent": true },
-    { "source": "/terms.html", "destination": "/terms", "permanent": true },
-    { "source": "/contact.html", "destination": "/contact", "permanent": true },
-    { "source": "/payment.html", "destination": "/payment", "permanent": true }
+  "routes": [
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/products", "dest": "/products.html" },
+    { "src": "/product-detail", "dest": "/product-detail.html" },
+    { "src": "/(.*)", "dest": "/$1" }
   ]
 }
