@@ -34,7 +34,7 @@ const PRODUCTS = [
     desc: "LED battery display with powerful airflow. Built for performance and long-lasting comfort.",
     longDesc: "The HighVoltage Turbo Fan features a bright LED battery indicator so you always know your charge level. With a high-RPM motor and extended 2500mAh cell, it powers through the day without complaint.",
     images: [
-      "assets/images/products/highvoltage-fan-1.png",
+      "assets/images/product1.png",
       "assets/images/products/highvoltage-fan-2.png",
       "assets/images/products/highvoltage-fan-3.png"
     ],
