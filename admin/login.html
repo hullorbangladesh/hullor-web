@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin Login — Hullor</title>
+<link rel="shortcut icon" type="image/x-icon" href="../assets/images/favicon.svg"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --cream: #F5F1E8; --cream-dark: #EDE7D5;
+    --forest: #2C4A35; --forest-deep: #1A3025; --forest-mid: #3A5E45;
+    --gold: #B8963E; --gold-light: #D4AF5A; --gold-pale: #ECD98E;
+    --sand: #D4C99A; --sand-light: #E8E0C4;
+    --muted: #6B7368; --ink: #1B1E19; --white: #FFFFFF;
+    --error: #C0392B;
+    --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px;
+    --transition: 0.32s cubic-bezier(0.4,0,0.2,1);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "DM Sans", sans-serif;
+    background: var(--forest-deep);
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    position: relative; overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 20% 80%, rgba(184,150,62,0.12) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(44,74,53,0.4) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  /* Animated bg circles */
+  .bg-orb {
+    position: absolute; border-radius: 50%;
+    background: rgba(184,150,62,0.06);
+    animation: orbFloat 8s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .bg-orb:nth-child(1) { width: 400px; height: 400px; top: -100px; right: -100px; animation-delay: 0s; }
+  .bg-orb:nth-child(2) { width: 300px; height: 300px; bottom: -80px; left: -80px; animation-delay: -4s; }
+  @keyframes orbFloat {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50%       { transform: translate(20px,-20px) scale(1.05); }
+  }
+
+  .login-card {
+    background: var(--white);
+    width: min(420px, 100%);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+    position: relative; z-index: 1;
+    animation: cardIn 0.6s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(40px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .card-top {
+    background: linear-gradient(135deg, var(--forest-deep) 0%, var(--forest-mid) 100%);
+    padding: 40px 40px 36px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .card-top::after {
+    content: '';
+    position: absolute; bottom: -1px; left: 0; right: 0;
+    height: 40px;
+    background: var(--white);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  }
+  .logo-mark {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 64px; height: 64px;
+    background: rgba(184,150,62,0.15);
+    border: 1.5px solid rgba(184,150,62,0.3);
+    border-radius: 16px;
+    margin-bottom: 18px;
+    font-size: 28px;
+  }
+  .card-brand {
+    font-family: "Playfair Display", serif;
+    font-size: 28px; font-weight: 900;
+    color: var(--gold-pale); letter-spacing: -0.5px;
+  }
+  .card-brand span { color: var(--gold); }
+  .card-sub {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(236,217,142,0.5); margin-top: 6px; font-weight: 500;
+  }
+
+  .card-body { padding: 36px 40px 40px; }
+
+  .form-group { margin-bottom: 18px; }
+  .form-group label {
+    display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 8px; font-weight: 500;
+  }
+  .form-group input {
+    width: 100%; padding: 13px 16px;
+    border: 1.5px solid var(--sand-light);
+    border-radius: var(--radius-sm);
+    background: var(--cream);
+    font-family: "DM Sans", sans-serif; font-size: 15px; color: var(--ink);
+    outline: none;
+    transition: border-color var(--transition), box-shadow var(--transition);
+  }
+  .form-group input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(184,150,62,0.12);
+  }
+  .form-group input.error { border-color: var(--error); }
+
+  .error-msg {
+    display: none; align-items: center; gap: 10px;
+    background: #FEF0EF; border: 1px solid #F5C6C1;
+    border-radius: var(--radius-sm); padding: 12px 14px;
+    font-size: 13px; color: var(--error);
+    margin-bottom: 18px;
+    animation: shake 0.3s ease;
+  }
+  .error-msg.show { display: flex; }
+  @keyframes shake {
+    0%,100%{ transform:translateX(0) }
+    25%    { transform:translateX(-6px) }
+    75%    { transform:translateX(6px) }
+  }
+
+  .btn-login {
+    width: 100%; padding: 16px;
+    background: var(--forest-deep); color: var(--gold-pale);
+    border: 1.5px solid transparent; border-radius: var(--radius-sm);
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    cursor: pointer; font-family: "DM Sans", sans-serif; font-weight: 500;
+    transition: var(--transition);
+    box-shadow: 0 4px 20px rgba(26,48,37,0.22);
+    position: relative;
+  }
+  .btn-login:hover { background: var(--forest-mid); border-color: var(--gold); }
+  .btn-login:disabled { opacity: 0.6; cursor: not-allowed; }
+  .btn-label { transition: opacity 0.2s; }
+  .btn-spinner {
+    display: none; width: 18px; height: 18px;
+    border: 2px solid rgba(236,217,142,0.3);
+    border-top-color: var(--gold-pale); border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+  }
+  .btn-login.loading .btn-label { opacity: 0; }
+  .btn-login.loading .btn-spinner { display: block; }
+  @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+  .back-link {
+    display: block; text-align: center; margin-top: 20px;
+    font-size: 12px; color: var(--muted); text-decoration: none;
+    transition: color var(--transition);
+  }
+  .back-link:hover { color: var(--forest); }
+</style>
+</head>
+<body>
+  <div class="bg-orb"></div>
+  <div class="bg-orb"></div>
+
+  <div class="login-card">
+    <div class="card-top">
+      <div class="logo-mark">🔑</div>
+      <div class="card-brand">Hullor<span>.</span></div>
+      <div class="card-sub">Admin Panel</div>
+    </div>
+    <div class="card-body">
+      <div class="error-msg" id="errorMsg">
+        <span>⚠️</span>
+        <span id="errorText">Invalid credentials.</span>
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="admin@hullor.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+      </div>
+
+      <button class="btn-login" id="loginBtn" onclick="doLogin()">
+        <span class="btn-label">Sign In</span>
+        <span class="btn-spinner"></span>
+      </button>
+      <a href="../index.html" class="back-link">← Back to store</a>
+    </div>
+  </div>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="../assets/js/firebase-config.js"></script>
+<script>
+  firebase.initializeApp(FIREBASE_CONFIG);
+  const auth = firebase.auth();
+
+  // If already logged in, redirect
+  auth.onAuthStateChanged(user => {
+    if (user) location.href = "dashboard.html";
+  });
+
+  async function doLogin() {
+    const email    = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const btn      = document.getElementById("loginBtn");
+    const errEl    = document.getElementById("errorMsg");
+
+    errEl.classList.remove("show");
+    if (!email || !password) {
+      document.getElementById("errorText").textContent = "Please enter email and password.";
+      errEl.classList.add("show"); return;
+    }
+
+    btn.classList.add("loading"); btn.disabled = true;
+
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      location.href = "dashboard.html";
+    } catch (err) {
+      document.getElementById("errorText").textContent =
+        err.code === "auth/wrong-password" || err.code === "auth/user-not-found"
+          ? "Invalid email or password."
+          : err.message;
+      errEl.classList.add("show");
+      btn.classList.remove("loading"); btn.disabled = false;
+    }
+  }
+
+  // Enter key
+  document.addEventListener("keydown", e => { if (e.key === "Enter") doLogin(); });
+</script>
+</body>
+</html>
