@@ -671,7 +671,12 @@ nav {
   </div>
 </div>
 
-<script src="assets/js/products-data.js"></script>
+<!-- Firebase + Data Service Setup -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="assets/js/firebase-config.js"></script>
+<script src="assets/js/data-service.js"></script>
+
 <script>
   const hamburger = document.getElementById("hamburger");
   const mobileMenu = document.getElementById("mobileMenu");
@@ -680,37 +685,44 @@ nav {
     mobileMenu.classList.toggle("open");
   });
 
-  const params  = new URLSearchParams(location.search);
-  const pid     = params.get("id");
-  const product = PRODUCTS.find(p => p.id === pid);
+  let product;
+  let selectedColor = null;
 
-  if (!product) {
-    document.querySelector(".product-page").innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:80px 20px;">
-        <p style="font-size:52px;margin-bottom:20px;">🔍</p>
-        <h2 style="font-family:'Playfair Display',serif;color:var(--forest-deep);margin-bottom:12px;">Product not found</h2>
-        <a href="products.html" style="color:var(--gold)">← Back to store</a>
-      </div>`;
-  } else {
+  // We wrap the setup logic inside onDataReady so that PRODUCTS array is loaded first from Firebase
+  onDataReady(() => {
+    const params  = new URLSearchParams(location.search);
+    const pid     = params.get("id");
+    product = PRODUCTS.find(p => p.id === pid);
+
+    if (!product) {
+      document.querySelector(".product-page").innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:80px 20px;">
+          <p style="font-size:52px;margin-bottom:20px;">🔍</p>
+          <h2 style="font-family:'Playfair Display',serif;color:var(--forest-deep);margin-bottom:12px;">Product not found</h2>
+          <a href="products.html" style="color:var(--gold)">← Back to store</a>
+        </div>`;
+      return;
+    }
+
     document.title = product.name + " — Hullor Bangladesh";
     document.getElementById("breadcrumbName").textContent = product.name;
     document.getElementById("infoBadge").textContent      = product.badge;
     document.getElementById("infoName").textContent       = product.name;
     document.getElementById("infoPrice").innerHTML        = `<sup>৳</sup>${product.price.toLocaleString("en-BD")}`;
     document.getElementById("infoDesc").textContent       = product.longDesc;
-    document.getElementById("infoSpecs").innerHTML        = product.specs.map(s => `<span class="spec-chip">${s}</span>`).join("");
+    document.getElementById("infoSpecs").innerHTML        = (product.specs || []).map(s => `<span class="spec-chip">${s}</span>`).join("");
 
     let activeImg = 0;
     const mainImg = document.getElementById("mainImg");
-    mainImg.src = product.images[0];
+    mainImg.src = (product.images && product.images.length > 0) ? product.images[0] : 'assets/images/placeholder.png';
     mainImg.alt = product.name;
 
-    document.getElementById("thumbs").innerHTML = product.images.map((src, i) => `
+    document.getElementById("thumbs").innerHTML = (product.images || []).map((src, i) => `
       <div class="gallery-thumb${i === 0 ? ' active' : ''}" onclick="switchImg(${i})">
         <img src="${src}" alt="${product.name} view ${i + 1}" onerror="this.src='assets/images/placeholder.png'">
       </div>`).join("");
 
-    function switchImg(i) {
+    window.switchImg = function(i) {
       if (i === activeImg) return;
       activeImg = i;
       mainImg.classList.add("switching");
@@ -719,10 +731,8 @@ nav {
         mainImg.classList.remove("switching");
       }, 200);
       document.querySelectorAll(".gallery-thumb").forEach((t, ti) => t.classList.toggle("active", ti === i));
-    }
-    window.switchImg = switchImg;
+    };
 
-    let selectedColor = null;
     const enabledColors  = product.colors ? product.colors.filter(c => c.enabled) : [];
     const swatchesEl     = document.getElementById("colorSwatches");
     const colorSection   = document.getElementById("colorSection");
@@ -744,14 +754,13 @@ nav {
       }
     }
 
-    function selectColor(i) {
+    window.selectColor = function(i) {
       const c = product.colors[i];
       if (!c || !c.enabled) return;
       selectedColor = c;
       document.getElementById("colorSelectedName").textContent = "— " + c.name;
       document.querySelectorAll(".color-swatch").forEach((s, si) => s.classList.toggle("active", si === i));
-    }
-    window.selectColor = selectColor;
+    };
 
     const sel = document.getElementById("delivery");
     DELIVERY_OPTIONS.forEach(d => {
@@ -760,121 +769,126 @@ nav {
       opt.textContent = `${d.label} (+৳${d.charge})`;
       sel.appendChild(opt);
     });
+  });
 
-    function openOrder() {
-      ["fname", "phone", "address"].forEach(clearField);
-      document.getElementById("note").value = "";
-      hideError();
-      document.getElementById("delivery").selectedIndex = 0;
-      updateTotal();
-      document.getElementById("panelImg").src           = product.images[0];
-      document.getElementById("panelName").textContent  = product.name;
-      document.getElementById("panelColor").textContent = selectedColor ? selectedColor.name : "";
-      document.getElementById("panelPrice").textContent = "৳" + product.price.toLocaleString("en-BD");
-      document.getElementById("orderOverlay").classList.add("open");
-    }
-    function closeOrder() { document.getElementById("orderOverlay").classList.remove("open"); }
-    window.openOrder  = openOrder;
-    window.closeOrder = closeOrder;
-
-    function updateTotal() {
-      const charge = parseInt(document.getElementById("delivery").value) || 0;
-      const total  = product.price + charge;
-      document.getElementById("totalSub").textContent   = `৳${product.price} + ৳${charge} delivery`;
-      document.getElementById("totalPrice").textContent = "৳" + total.toLocaleString("en-BD");
-    }
-    window.updateTotal = updateTotal;
-
-    function clearField(id) {
-      const el = document.getElementById(id);
-      if (el) { el.value = ""; el.classList.remove("error"); }
-      const err = document.getElementById(id + "Err");
-      if (err) err.classList.remove("show");
-    }
-    function hideError() { document.getElementById("errorBanner").classList.remove("show"); }
-    function showError(msgs) {
-      const banner = document.getElementById("errorBanner");
-      const text   = document.getElementById("errorText");
-      text.innerHTML = `<strong>Please fill in the required fields:</strong><br>${msgs.join(", ")}`;
-      banner.classList.add("show");
-      banner.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }
-    function setFieldError(id, show) {
-      document.getElementById(id).classList.toggle("error", show);
-      document.getElementById(id + "Err").classList.toggle("show", show);
-    }
-
-    async function submitOrder() {
-      const fname   = document.getElementById("fname").value.trim();
-      const phone   = document.getElementById("phone").value.trim();
-      const address = document.getElementById("address").value.trim();
-      const note    = document.getElementById("note").value.trim();
-      const selEl   = document.getElementById("delivery");
-      const charge  = parseInt(selEl.value);
-      const area    = DELIVERY_OPTIONS.find(d => d.charge === charge)?.label || selEl.options[selEl.selectedIndex]?.text;
-      const total   = product.price + charge;
-
-      const missing = [];
-      setFieldError("fname",   !fname);   if (!fname)   missing.push("Full Name");
-      setFieldError("phone",   !phone);   if (!phone)   missing.push("Phone Number");
-      setFieldError("address", !address); if (!address) missing.push("Address");
-
-      if (missing.length) { showError(missing); return; }
-      hideError();
-
-      const btn = document.getElementById("confirmBtn");
-      btn.classList.add("loading"); btn.disabled = true;
-
-      const payload = {
-        Timestamp: new Date().toLocaleString("en-BD", { timeZone: "Asia/Dhaka" }),
-        Product:  product.name,
-        Price:    product.price,
-        Color:    selectedColor ? selectedColor.name : "N/A",
-        Name:     fname,
-        Phone:    phone,
-        Address:  address,
-        Area:     area,
-        Delivery: charge,
-        Total:    total,
-        Note:     note || "—"
-      };
-
-      try {
-        await fetch(SHEET_URL, {
-          method: "POST", mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-      } catch (_) {}
-
-      btn.classList.remove("loading"); btn.disabled = false;
-      closeOrder();
-      showThankyou({ name: fname, phone, product: product.name, color: selectedColor?.name, price: product.price, area, charge, total, note });
-    }
-    window.submitOrder = submitOrder;
-
-    function showThankyou({ name, phone, product: pname, color, price, area, charge, total, note }) {
-      document.getElementById("tyName").textContent  = name.split(" ")[0];
-      document.getElementById("tyPhone").textContent = phone;
-      const rows = [
-        ["Product", pname],
-        color && ["Colour", color],
-        ["Price",    "৳" + price.toLocaleString("en-BD")],
-        ["Delivery", `${area} (৳${charge})`],
-        note && ["Note", note]
-      ].filter(Boolean);
-      document.getElementById("tySummary").innerHTML =
-        rows.map(([k, v]) => `<div class="ty-row"><span class="ty-key">${k}</span><span class="ty-val">${v}</span></div>`).join("") +
-        `<div class="ty-sep"></div><div class="ty-row ty-total"><span class="ty-key">Total</span><span class="ty-val">৳${total.toLocaleString("en-BD")}</span></div>`;
-      document.getElementById("thankyouOverlay").classList.add("open");
-    }
-
-    function closeThankyou() {
-      document.getElementById("thankyouOverlay").classList.remove("open");
-      location.href = "products.html";
-    }
-    window.closeThankyou = closeThankyou;
+  function openOrder() {
+    if(!product) return;
+    ["fname", "phone", "address"].forEach(clearField);
+    document.getElementById("note").value = "";
+    hideError();
+    document.getElementById("delivery").selectedIndex = 0;
+    updateTotal();
+    document.getElementById("panelImg").src           = product.images[0] || '';
+    document.getElementById("panelName").textContent  = product.name;
+    document.getElementById("panelColor").textContent = selectedColor ? selectedColor.name : "";
+    document.getElementById("panelPrice").textContent = "৳" + product.price.toLocaleString("en-BD");
+    document.getElementById("orderOverlay").classList.add("open");
   }
+  function closeOrder() { document.getElementById("orderOverlay").classList.remove("open"); }
+  window.openOrder  = openOrder;
+  window.closeOrder = closeOrder;
+
+  function updateTotal() {
+    if(!product) return;
+    const charge = parseInt(document.getElementById("delivery").value) || 0;
+    const total  = product.price + charge;
+    document.getElementById("totalSub").textContent   = `৳${product.price} + ৳${charge} delivery`;
+    document.getElementById("totalPrice").textContent = "৳" + total.toLocaleString("en-BD");
+  }
+  window.updateTotal = updateTotal;
+
+  function clearField(id) {
+    const el = document.getElementById(id);
+    if (el) { el.value = ""; el.classList.remove("error"); }
+    const err = document.getElementById(id + "Err");
+    if (err) err.classList.remove("show");
+  }
+  function hideError() { document.getElementById("errorBanner").classList.remove("show"); }
+  function showError(msgs) {
+    const banner = document.getElementById("errorBanner");
+    const text   = document.getElementById("errorText");
+    text.innerHTML = `<strong>Please fill in the required fields:</strong><br>${msgs.join(", ")}`;
+    banner.classList.add("show");
+    banner.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+  function setFieldError(id, show) {
+    document.getElementById(id).classList.toggle("error", show);
+    document.getElementById(id + "Err").classList.toggle("show", show);
+  }
+
+  // Changed from Sheet submission directly to Firebase
+  async function submitOrder() {
+    if(!product) return;
+    const fname   = document.getElementById("fname").value.trim();
+    const phone   = document.getElementById("phone").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const note    = document.getElementById("note").value.trim();
+    const selEl   = document.getElementById("delivery");
+    const charge  = parseInt(selEl.value);
+    const area    = DELIVERY_OPTIONS.find(d => d.charge === charge)?.label || selEl.options[selEl.selectedIndex]?.text;
+    const total   = product.price + charge;
+
+    const missing = [];
+    setFieldError("fname",   !fname);   if (!fname)   missing.push("Full Name");
+    setFieldError("phone",   !phone);   if (!phone)   missing.push("Phone Number");
+    setFieldError("address", !address); if (!address) missing.push("Address");
+
+    if (missing.length) { showError(missing); return; }
+    hideError();
+
+    const btn = document.getElementById("confirmBtn");
+    btn.classList.add("loading"); btn.disabled = true;
+
+    const payload = {
+      Timestamp: new Date().toLocaleString("en-BD", { timeZone: "Asia/Dhaka" }),
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      Product:  product.name,
+      Price:    product.price,
+      Color:    selectedColor ? selectedColor.name : "N/A",
+      Name:     fname,
+      Phone:    phone,
+      Address:  address,
+      Area:     area,
+      Delivery: charge,
+      Total:    total,
+      Note:     note || "—",
+      status:   "new" // Required to default to "new" on the Admin panel
+    };
+
+    try {
+      const db = firebase.firestore();
+      await db.collection("orders").add(payload);
+    } catch (err) {
+      console.error("Order submission failed:", err);
+    }
+
+    btn.classList.remove("loading"); btn.disabled = false;
+    closeOrder();
+    showThankyou({ name: fname, phone, product: product.name, color: selectedColor?.name, price: product.price, area, charge, total, note });
+  }
+  window.submitOrder = submitOrder;
+
+  function showThankyou({ name, phone, product: pname, color, price, area, charge, total, note }) {
+    document.getElementById("tyName").textContent  = name.split(" ")[0];
+    document.getElementById("tyPhone").textContent = phone;
+    const rows = [
+      ["Product", pname],
+      color && ["Colour", color],
+      ["Price",    "৳" + price.toLocaleString("en-BD")],
+      ["Delivery", `${area} (৳${charge})`],
+      note && ["Note", note]
+    ].filter(Boolean);
+    document.getElementById("tySummary").innerHTML =
+      rows.map(([k, v]) => `<div class="ty-row"><span class="ty-key">${k}</span><span class="ty-val">${v}</span></div>`).join("") +
+      `<div class="ty-sep"></div><div class="ty-row ty-total"><span class="ty-key">Total</span><span class="ty-val">৳${total.toLocaleString("en-BD")}</span></div>`;
+    document.getElementById("thankyouOverlay").classList.add("open");
+  }
+
+  function closeThankyou() {
+    document.getElementById("thankyouOverlay").classList.remove("open");
+    location.href = "products.html";
+  }
+  window.closeThankyou = closeThankyou;
 
   document.getElementById("orderOverlay").addEventListener("click", function(e) { if (e.target === this) closeOrder(); });
   document.getElementById("thankyouOverlay").addEventListener("click", function(e) { if (e.target === this) closeThankyou(); });

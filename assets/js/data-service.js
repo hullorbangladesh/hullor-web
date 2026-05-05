@@ -1,9 +1,14 @@
 // ════════════════════════════════════════════════════════
-// HULLOR — Products Data
-// Edit this file to add / remove products
+// HULLOR — Firebase Data Service
+// Loads products & delivery options from Firestore
+// Falls back to static defaults if offline
 // ════════════════════════════════════════════════════════
 
-const PRODUCTS = [
+// ── Firebase SDK (compat) ──────────────────────────────
+// Loaded via CDN in each HTML page before this script
+
+// ── Default seed data (used on first run) ─────────────
+const DEFAULT_PRODUCTS = [
   {
     id: "premium-turbo-fan",
     name: "Premium Turbo Fan",
@@ -23,7 +28,9 @@ const PRODUCTS = [
       { name: "Pearl White",   hex: "#F5F1E8", enabled: true  },
       { name: "Dusty Rose",    hex: "#C4896F", enabled: false }
     ],
-    specs: ["Type-C Charging", "3-Speed Modes", "Whisper Quiet", "6h Battery"]
+    specs: ["Type-C Charging", "3-Speed Modes", "Whisper Quiet", "6h Battery"],
+    order: 0,
+    visible: true
   },
   {
     id: "highvoltage-turbo-fan",
@@ -44,7 +51,9 @@ const PRODUCTS = [
       { name: "Pearl White",   hex: "#F5F1E8", enabled: false },
       { name: "Sky Blue",      hex: "#4A7FA5", enabled: true  }
     ],
-    specs: ["LED Battery Display", "2500mAh Cell", "High-RPM Motor", "8h Battery"]
+    specs: ["LED Battery Display", "2500mAh Cell", "High-RPM Motor", "8h Battery"],
+    order: 1,
+    visible: true
   },
   {
     id: "pocket-neck-fan",
@@ -65,7 +74,9 @@ const PRODUCTS = [
       { name: "Pearl White",   hex: "#F5F1E8", enabled: true },
       { name: "Sky Blue",      hex: "#4A7FA5", enabled: true }
     ],
-    specs: ["Hands-Free", "270° Airflow", "Bladeless", "10h Battery"]
+    specs: ["Hands-Free", "270° Airflow", "Bladeless", "10h Battery"],
+    order: 2,
+    visible: true
   },
   {
     id: "magnetic-cable-set",
@@ -85,7 +96,9 @@ const PRODUCTS = [
       { name: "Space Gray", hex: "#5A5A5A", enabled: true  },
       { name: "Rose Gold",  hex: "#C49A6C", enabled: false }
     ],
-    specs: ["60W Fast Charge", "3-in-1 Tips", "Braided Nylon", "1.2m Length"]
+    specs: ["60W Fast Charge", "3-in-1 Tips", "Braided Nylon", "1.2m Length"],
+    order: 3,
+    visible: true
   },
   {
     id: "power-bank-10k",
@@ -105,7 +118,9 @@ const PRODUCTS = [
       { name: "Pearl White",   hex: "#F5F1E8", enabled: true },
       { name: "Navy Blue",     hex: "#2C3E6A", enabled: true }
     ],
-    specs: ["10,000mAh", "Dual USB-A", "USB-C PD", "Slim 12mm"]
+    specs: ["10,000mAh", "Dual USB-A", "USB-C PD", "Slim 12mm"],
+    order: 4,
+    visible: true
   },
   {
     id: "led-desk-lamp",
@@ -125,16 +140,97 @@ const PRODUCTS = [
       { name: "Matte Black", hex: "#2A2A2A", enabled: true },
       { name: "Dusty Rose",  hex: "#C4896F", enabled: true }
     ],
-    specs: ["Touch Dimmer", "3 Color Temps", "5 Brightness", "USB Port"]
+    specs: ["Touch Dimmer", "3 Color Temps", "5 Brightness", "USB Port"],
+    order: 5,
+    visible: true
   }
 ];
 
-// ── Delivery options — shared across all pages ──────────
-const DELIVERY_OPTIONS = [
+const DEFAULT_DELIVERY_OPTIONS = [
   { label: "Inside Dhaka",  charge: 80  },
   { label: "Outside Dhaka", charge: 150 }
 ];
 
-// ── Google Apps Script URL ──────────────────────────────
-// Paste your Web App deployment URL below
-const SHEET_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID_HERE/exec";
+// ── Runtime globals (populated from Firestore) ─────────
+let PRODUCTS         = [];
+let DELIVERY_OPTIONS = [];
+let _dataLoaded      = false;
+let _dataCallbacks   = [];
+
+function onDataReady(cb) {
+  if (_dataLoaded) { cb(); return; }
+  _dataCallbacks.push(cb);
+}
+
+function _fireDataReady() {
+  _dataLoaded = true;
+  _dataCallbacks.forEach(cb => cb());
+  _dataCallbacks = [];
+}
+
+// ── Seed Firestore with defaults (first run) ──────────
+async function seedIfEmpty(db) {
+  try {
+    const snap = await db.collection("products").limit(1).get();
+    if (!snap.empty) return;
+    console.log("[Hullor] Seeding Firestore with default data…");
+    const batch = db.batch();
+    DEFAULT_PRODUCTS.forEach(p => {
+      batch.set(db.collection("products").doc(p.id), p);
+    });
+    await batch.commit();
+
+    const dSnap = await db.collection("settings").doc("delivery").get();
+    if (!dSnap.exists) {
+      await db.collection("settings").doc("delivery").set({ options: DEFAULT_DELIVERY_OPTIONS });
+    }
+    console.log("[Hullor] Seeding complete.");
+  } catch (e) {
+    console.warn("[Hullor] Seed skipped:", e.message);
+  }
+}
+
+// ── Load all data from Firestore ──────────────────────
+async function loadHullorData() {
+  try {
+    // Check if Firebase is available
+    if (typeof firebase === "undefined") {
+      throw new Error("Firebase SDK not loaded");
+    }
+
+    const app = firebase.apps.length
+      ? firebase.app()
+      : firebase.initializeApp(FIREBASE_CONFIG);
+    const db = firebase.firestore();
+
+    await seedIfEmpty(db);
+
+    // Load products (visible only for storefront)
+    const pSnap = await db.collection("products")
+      .where("visible", "==", true)
+      .orderBy("order")
+      .get();
+
+    PRODUCTS = pSnap.docs.map(d => ({ ...d.data(), id: d.id }));
+
+    // Load delivery options
+    const dSnap = await db.collection("settings").doc("delivery").get();
+    DELIVERY_OPTIONS = dSnap.exists
+      ? (dSnap.data().options || DEFAULT_DELIVERY_OPTIONS)
+      : DEFAULT_DELIVERY_OPTIONS;
+
+  } catch (err) {
+    console.warn("[Hullor] Firestore load failed, using defaults.", err.message);
+    PRODUCTS         = DEFAULT_PRODUCTS.filter(p => p.visible !== false);
+    DELIVERY_OPTIONS = DEFAULT_DELIVERY_OPTIONS;
+  }
+
+  _fireDataReady();
+}
+
+// ── Auto-init when DOM is ready ────────────────────────
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", loadHullorData);
+} else {
+  loadHullorData();
+}
